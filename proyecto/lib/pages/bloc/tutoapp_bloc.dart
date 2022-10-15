@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
@@ -56,14 +57,34 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       "Educación Artística"
     ]
   };
+  List<String> number = [
+    "Primero",
+    "Segundo",
+    "Tercero",
+    "Cuarto",
+    "Quinto",
+    "Sexto"
+  ];
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
+    on<TutoappSelectSubjectEvent>(_navAgenda);
+    on<TutoappCompleteAgendEvent>(_seeAgenda);
   }
 
   FutureOr<void> _showList(
       TutoappSelectGradeEvent event, Emitter<TutoappState> emit) {
     List<String> subject = grade[event.grade]!;
-    print("evento");
     emit(TutoappListState(subject: subject, grade: event.grade));
+  }
+
+  FutureOr<void> _navAgenda(
+      TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappAgendaChoiceState(
+        grade: number[event.grade - 1], subject: event.subject));
+  }
+
+  FutureOr<void> _seeAgenda(
+      TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappCompleteAgendState());
   }
 }

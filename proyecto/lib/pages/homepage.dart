@@ -1,7 +1,5 @@
-import 'dart:math';
-
-import 'package:navigation_drawer_menu/navigation_drawer_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,27 +23,10 @@ class HomePage extends StatelessWidget {
             listener: (context, state) {
               if (state is TutoappListState) {
                 Scaffold.of(context).showBottomSheet((context) => SizedBox(
-                    height: 150,
-                    width: 500,
-                    child: ListView.separated(
-                      itemCount: state.subject.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return TextButton(
-                            style: ButtonStyle(
-                              alignment: Alignment.centerLeft,
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              state.subject[index],
-                              style: TextStyle(
-                                  color: Colors.blueGrey[300], fontSize: 20),
-                            ));
-                      },
-                      separatorBuilder: (context, index) => Divider(
-                        thickness: 2,
-                        color: Colors.pink[100],
-                      ),
-                    )));
+                    height: 170, width: 500, child: _showBottonList(state)));
+              } else if (state is TutoappAgendaChoiceState) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => AgendarTutoria()));
               }
             },
             builder: (context, state) {
@@ -56,18 +37,48 @@ class HomePage extends StatelessWidget {
                       crossAxisSpacing: 5,
                       mainAxisSpacing: 5),
                   itemBuilder: (context, index) {
-                    return Container(
-                      child: IconButton(
-                          onPressed: () {
-                            BlocProvider.of<TutoappBloc>(context)
-                                .add(TutoappSelectGradeEvent(grade: index + 1));
-                          },
-                          icon: Image.asset('assets/images/${index + 1}.gif')),
-                    );
+                    return _bottonGrade(context, index);
                   });
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Container _bottonGrade(BuildContext context, int index) {
+    return Container(
+      child: IconButton(
+          onPressed: () {
+            BlocProvider.of<TutoappBloc>(context)
+                .add(TutoappSelectGradeEvent(grade: index + 1));
+          },
+          icon: Image.asset('assets/images/${index + 1}.gif')),
+    );
+  }
+
+  ListView _showBottonList(TutoappListState state) {
+    return ListView.separated(
+      itemCount: state.subject.length,
+      itemBuilder: (BuildContext context, int index) {
+        return TextButton(
+            style: ButtonStyle(
+              alignment: Alignment.centerLeft,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              BlocProvider.of<TutoappBloc>(context).add(
+                  TutoappSelectSubjectEvent(
+                      grade: state.grade, subject: state.subject[index]));
+            },
+            child: Text(
+              state.subject[index],
+              style: TextStyle(color: Colors.blueGrey[300], fontSize: 20),
+            ));
+      },
+      separatorBuilder: (context, index) => Divider(
+        thickness: 2,
+        color: Colors.pink[100],
       ),
     );
   }

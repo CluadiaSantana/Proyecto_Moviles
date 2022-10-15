@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/agenda.dart';
+import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:proyecto/pages/homepage.dart';
 
