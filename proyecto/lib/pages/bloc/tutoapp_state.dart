@@ -27,3 +27,7 @@ class TutoappAgendaChoiceState extends TutoappState {
 }
 
 class TutoappCompleteAgendState extends TutoappState {}
+
+class TutoappReagendarState extends TutoappState {}
+
+class TutoappCancelarState extends TutoappState {}

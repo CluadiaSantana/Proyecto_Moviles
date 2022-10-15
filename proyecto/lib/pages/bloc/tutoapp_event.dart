@@ -1,7 +1,15 @@
 part of 'tutoapp_bloc.dart';
 
 @immutable
-abstract class TutoappEvent extends Equatable {}
+abstract class TutoappEvent extends Equatable {
+  const TutoappEvent();
+  @override
+  List<Object> get props => [];
+}
+
+class TutoappReagendarEvent extends TutoappEvent {}
+
+class TutoappCancelarEvent extends TutoappEvent {}
 
 class TutoappSelectGradeEvent extends TutoappEvent {
   final int grade;

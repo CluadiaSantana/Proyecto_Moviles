@@ -69,6 +69,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappSelectGradeEvent>(_showList);
     on<TutoappSelectSubjectEvent>(_navAgenda);
     on<TutoappCompleteAgendEvent>(_seeAgenda);
+    on<TutoappCancelarEvent>(_cancelar);
+    on<TutoappReagendarEvent>(_reagendar);
   }
 
   FutureOr<void> _showList(
@@ -86,5 +88,16 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   FutureOr<void> _seeAgenda(
       TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) {
     emit(TutoappCompleteAgendState());
+  }
+
+  FutureOr<void> _cancelar(
+      TutoappCancelarEvent event, Emitter<TutoappState> emit) {
+    print("cancelar");
+    emit(TutoappCancelarState());
+  }
+
+  FutureOr<void> _reagendar(
+      TutoappReagendarEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappReagendarState());
   }
 }
