@@ -30,192 +30,72 @@ class TutoriasDisponibles extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Icon(
-                      Icons.account_circle_rounded,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Primero de Primaria",
-                    style: TextStyle(
-                        fontFamily: 'Chewy-Regular',
-                        fontSize: 24,
-                        color: Colors.amber[600]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: Text(
-                    "Matematicas",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100, top: 10),
-                  child: Text(
-                    "13:00 - 13:30",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Icon(
-                      Icons.account_circle_rounded,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Segundo de Primaria",
-                    style: TextStyle(
-                        fontFamily: 'Chewy-Regular',
-                        fontSize: 24,
-                        color: Colors.blue[600]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: Text(
-                    "Historia",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100, top: 10),
-                  child: Text(
-                    "13:00 - 13:30",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Icon(
-                      Icons.account_circle_rounded,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Tercero de Primaria",
-                    style: TextStyle(
-                        fontFamily: 'Chewy-Regular',
-                        fontSize: 24,
-                        color: Colors.green[600]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: Text(
-                    "Ciencias Naturales",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100, top: 10),
-                  child: Text(
-                    "13:00 - 13:30",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Icon(
-                      Icons.account_circle_rounded,
-                      size: 40,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    "Quinto de Primaria",
-                    style: TextStyle(
-                        fontFamily: 'Chewy-Regular',
-                        fontSize: 24,
-                        color: Colors.purple[600]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: Text(
-                    "Español",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 100, top: 10),
-                  child: Text(
-                    "1:00 - 13:30",
-                    style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
-                  ),
-                )
-              ],
-            )
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "11:00 - 11:30"),
+            espacioTutoria("Primero de Primaria", "Historia", "11:30 - 12:00"),
+            espacioTutoria("primero de Primaria", "Español", "12:00 - 12:30"),
+            espacioTutoria("Primero de Primaria", "Arte", "12:30 - 13:00"),
+            espacioTutoria("Primero de Primaria", "Historia", "13:00 - 13:30"),
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "13:30 - 14:00"),
+            espacioTutoria("Primero de Primaria", "Español", "14:00 - 14:30"),
           ],
         ),
+      ),
+    );
+  }
+
+  Container espacioTutoria(String Grade, String Subject, String Time) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Icon(
+                    Icons.account_circle_rounded,
+                    size: 40,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  Grade,
+                  style: TextStyle(
+                      fontFamily: 'Chewy-Regular',
+                      fontSize: 24,
+                      color: Colors.amber[600]),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 100),
+                child: Text(
+                  Subject,
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 100, top: 10),
+                child: Text(
+                  Time,
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
