@@ -31,14 +31,47 @@ class TutoriasDisponibles extends StatelessWidget {
         child: Column(
           children: [
             espacioTutoria(
-                "Primero de Primaria", "Matematicas", "11:00 - 11:30"),
-            espacioTutoria("Primero de Primaria", "Historia", "11:30 - 12:00"),
-            espacioTutoria("primero de Primaria", "Español", "12:00 - 12:30"),
-            espacioTutoria("Primero de Primaria", "Arte", "12:30 - 13:00"),
-            espacioTutoria("Primero de Primaria", "Historia", "13:00 - 13:30"),
+                "Primero de Primaria", "Matematicas", "11:00 - 12:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
             espacioTutoria(
-                "Primero de Primaria", "Matematicas", "13:30 - 14:00"),
-            espacioTutoria("Primero de Primaria", "Español", "14:00 - 14:30"),
+                "Primero de Primaria", "Matematicas", "12:00 - 13:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
+            espacioTutoria(
+                "primero de Primaria", "Matematicas", "13:00 - 14:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "14:00 - 15:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "15:00 - 16:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "16:00 - 17:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
+            espacioTutoria(
+                "Primero de Primaria", "Matematicas", "17:00 - 18:00"),
+            Divider(
+              thickness: 2,
+              color: Colors.pink[100],
+            ),
           ],
         ),
       ),
