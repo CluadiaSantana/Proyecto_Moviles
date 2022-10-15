@@ -6,12 +6,55 @@ part 'tutoapp_state.dart';
 
 class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   Map<int, List<String>> grade = {
-    1: ["Español", "Matematicaas"],
-    2: ["Ingles", "Historia"],
-    3: ["Matematicas", "Educacion Artistica"],
-    4: ["Matematicas", "Ciencias Naturales"],
-    5: ["Historia", "Geografia"],
-    6: ["Ingles", "Geografia", "Español"]
+    1: [
+      "Español",
+      "Matemáticas",
+      "Exploración de la Naturaleza y la Sociedad",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ],
+    2: [
+      "Español",
+      "Matemáticas",
+      "Exploración de la Naturaleza y la Sociedad",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ],
+    3: [
+      "Español",
+      "Matemáticas",
+      "Ciencias Naturales",
+      "La Entidad donde vivo",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ],
+    4: [
+      "Español",
+      "Matemáticas",
+      "Ciencias Naturales",
+      "Geografía",
+      "Historia",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ],
+    5: [
+      "Español",
+      "Matemáticas",
+      "Ciencias Naturales",
+      "Geografía",
+      "Historia",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ],
+    6: [
+      "Español",
+      "Matemáticas",
+      "Ciencias Naturales",
+      "Geografía",
+      "Historia",
+      "Formación Cívica y Ética",
+      "Educación Artística"
+    ]
   };
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
@@ -21,6 +64,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       TutoappSelectGradeEvent event, Emitter<TutoappState> emit) {
     List<String> subject = grade[event.grade]!;
     print("evento");
-    emit(TutoappListState(subject: subject));
+    emit(TutoappListState(subject: subject, grade: event.grade));
   }
 }

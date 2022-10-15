@@ -7,6 +7,7 @@ class TutoappInitial extends TutoappState {}
 
 class TutoappListState extends TutoappState {
   final List<String> subject;
+  final int grade;
 
-  TutoappListState({required this.subject});
+  TutoappListState({required this.subject, required this.grade});
 }

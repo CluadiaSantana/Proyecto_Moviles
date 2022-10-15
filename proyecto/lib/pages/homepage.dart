@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:navigation_drawer_menu/navigation_drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
@@ -23,14 +25,27 @@ class HomePage extends StatelessWidget {
             listener: (context, state) {
               if (state is TutoappListState) {
                 Scaffold.of(context).showBottomSheet((context) => SizedBox(
-                      height: 50,
-                      width: 500,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [Text(state.subject[1])],
+                    height: 150,
+                    width: 500,
+                    child: ListView.separated(
+                      itemCount: state.subject.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TextButton(
+                            style: ButtonStyle(
+                              alignment: Alignment.centerLeft,
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              state.subject[index],
+                              style: TextStyle(
+                                  color: Colors.blueGrey[300], fontSize: 20),
+                            ));
+                      },
+                      separatorBuilder: (context, index) => Divider(
+                        thickness: 2,
+                        color: Colors.pink[100],
                       ),
-                    ));
+                    )));
               }
             },
             builder: (context, state) {
@@ -57,22 +72,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
-// showModalBottomSheet(
-//                                 context: context,
-//                                 builder: (context) {
-//                                   return SizedBox(
-//                                     height: 200,
-//                                     child: Column(
-//                                       crossAxisAlignment:
-//                                           CrossAxisAlignment.start,
-//                                       mainAxisSize: MainAxisSize.min,
-//                                       children: [
-//                                         TextButton(
-//                                             onPressed: (() {}),
-//                                             child: Text("Hola"))
-//                                       ],
-//                                     ),
-//                                   );
-//                                 });
