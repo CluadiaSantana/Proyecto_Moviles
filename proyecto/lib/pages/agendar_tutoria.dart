@@ -23,33 +23,33 @@ class AgendarTutoria extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "TutoApp - Agenda Una Tutoria",
-            style: TextStyle(
-                fontFamily: 'Chewy-Regular',
-                fontSize: 24,
-                color: Colors.amber[600]),
-          ),
-          actions: [
-            GestureDetector(
-              onTap: () {},
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: Icon(
-                  Icons.account_circle_rounded,
-                  size: 40,
-                ),
-              ),
-            )
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "TutoApp - Agenda Una Tutoria",
+          style: TextStyle(
+              fontFamily: 'Chewy-Regular',
+              fontSize: 24,
+              color: Colors.amber[600]),
         ),
-        body: Column(
+        actions: [
+          GestureDetector(
+            onTap: () {},
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Icon(
+                Icons.account_circle_rounded,
+                size: 40,
+              ),
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(bottom: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -70,28 +70,39 @@ class AgendarTutoria extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 100,
-                          width: 400,
-                          child: ListView.separated(
-                            padding: EdgeInsets.all(10),
-                            itemCount: clases.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Text(
-                                clases[index],
-                                style: TextStyle(
-                                    fontFamily: 'Chewy-Regular',
-                                    fontSize: 24,
-                                    color: Colors.amber[600]),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) => Divider(
-                              thickness: 1,
-                              color: Colors.pink[100],
-                              indent: 5,
-                            ),
-                          ),
+                        Text(
+                          "Primero",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontFamily: 'Chewy-Regular',
+                              fontSize: 24,
+                              color: Colors.amber[600]),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    "Materia",
+                    style: TextStyle(
+                        fontFamily: 'Chewy-Regular',
+                        fontSize: 32,
+                        color: Colors.blue[600]),
+                    textAlign: TextAlign.left,
+                  ),
+                  Divider(
+                    thickness: 2,
+                    color: Colors.red,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Formacion Civica y Etica",
+                          style: TextStyle(
+                              fontFamily: 'Chewy-Regular',
+                              fontSize: 24,
+                              color: Colors.amber[600]),
                         ),
                       ],
                     ),
