@@ -101,16 +101,63 @@ class Agenda extends StatelessWidget {
                 builder: (BuildContext context) {
                   return Container(
                     height: 200,
-                    color: Colors.blueGrey[300],
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text('Reagendar tutoria'),
-                          ElevatedButton(
-                            child: const Text('Close BottomSheet'),
-                            onPressed: () => Navigator.pop(context),
+                          const Text(
+                            'Reagendar tutoria',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'Chewy-Regular',
+                                color: Colors.blue),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 100,
+                                  width: 400,
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.all(10),
+                                    itemCount: horario.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Text(
+                                        horario,
+                                        style: TextStyle(
+                                            fontFamily: 'Chewy-Regular',
+                                            fontSize: 20,
+                                            color: Colors.amber[600]),
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) =>
+                                            Divider(
+                                      thickness: 1,
+                                      color: Colors.pink[100],
+                                      indent: 5,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                child: const Text('Aceptar'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.red),
+                                child: const Text('Cancelar'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                            ],
                           ),
                         ],
                       ),
