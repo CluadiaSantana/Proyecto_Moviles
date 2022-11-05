@@ -35,6 +35,7 @@ dependencies:
   navigation_drawer_menu:
   equatable:
   dart_date: 
+  url_launcher:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -71,6 +72,7 @@ flutter:
     - assets/images/4.gif
     - assets/images/5.gif
     - assets/images/6.gif
+    - assets/images/zoom.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

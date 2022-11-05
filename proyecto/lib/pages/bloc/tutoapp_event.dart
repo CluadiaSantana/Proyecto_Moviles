@@ -9,6 +9,8 @@ abstract class TutoappEvent extends Equatable {
 
 class TutoappReagendarEvent extends TutoappEvent {}
 
+class TutoappZoomEvent extends TutoappEvent {}
+
 class TutoappCancelarEvent extends TutoappEvent {}
 
 class TutoappSelectGradeEvent extends TutoappEvent {

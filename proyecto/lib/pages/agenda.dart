@@ -94,98 +94,108 @@ class Agenda extends StatelessWidget {
             ],
           ),
         ),
-        ElevatedButton(
-          onPressed: () {
-            showModalBottomSheet<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return Container(
-                    height: 200,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Reagendar tutoria',
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Chewy-Regular',
-                                color: Colors.blue),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 100,
-                                  width: 400,
-                                  child: ListView.separated(
-                                    padding: EdgeInsets.all(10),
-                                    itemCount: horario.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Text(
-                                        horario,
-                                        style: TextStyle(
-                                            fontFamily: 'Chewy-Regular',
-                                            fontSize: 20,
-                                            color: Colors.amber[600]),
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) =>
-                                            Divider(
-                                      thickness: 1,
-                                      color: Colors.pink[100],
-                                      indent: 5,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+        IconButton(
+            onPressed: (() {
+              BlocProvider.of<TutoappBloc>(context).add(TutoappZoomEvent());
+            }),
+            icon: Image.asset('assets/images/zoom.png')),
+        Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                showModalBottomSheet<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ElevatedButton(
-                                child: const Text('Aceptar'),
-                                onPressed: () => Navigator.pop(context),
+                              const Text(
+                                'Reagendar tutoria',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontFamily: 'Chewy-Regular',
+                                    color: Colors.blue),
                               ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red),
-                                child: const Text('Cancelar'),
-                                onPressed: () => Navigator.pop(context),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 100,
+                                      width: 400,
+                                      child: ListView.separated(
+                                        padding: EdgeInsets.all(10),
+                                        itemCount: horario.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Text(
+                                            horario,
+                                            style: TextStyle(
+                                                fontFamily: 'Chewy-Regular',
+                                                fontSize: 20,
+                                                color: Colors.amber[600]),
+                                          );
+                                        },
+                                        separatorBuilder:
+                                            (BuildContext context, int index) =>
+                                                Divider(
+                                          thickness: 1,
+                                          color: Colors.pink[100],
+                                          indent: 5,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(
+                                    child: const Text('Aceptar'),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red),
+                                    child: const Text('Cancelar'),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                });
-          },
-          child: Text("Reagendar"),
-          style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[400],
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              textStyle:
-                  const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                        ),
+                      );
+                    });
+              },
+              child: Text("Reagendar"),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[400],
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  textStyle: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.bold)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  _cancelQuestion(context);
+                },
+                child: Text("Cancelar"),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red[400],
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    textStyle: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.bold)),
+              ),
+            )
+          ],
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () {
-              _cancelQuestion(context);
-            },
-            child: Text("Cancelar"),
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red[400],
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                textStyle:
-                    const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          ),
-        )
       ],
     );
   }

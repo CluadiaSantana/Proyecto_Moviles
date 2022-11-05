@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:dart_date/dart_date.dart';
+import 'package:url_launcher/url_launcher.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
 
@@ -78,6 +79,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappCompleteAgendEvent>(_seeAgenda);
     on<TutoappCancelarEvent>(_cancelar);
     on<TutoappReagendarEvent>(_reagendar);
+    on<TutoappZoomEvent>(_goZoom);
   }
 
   FutureOr<void> _showList(
@@ -118,5 +120,14 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   FutureOr<void> _reagendar(
       TutoappReagendarEvent event, Emitter<TutoappState> emit) {
     emit(TutoappReagendarState());
+  }
+
+  FutureOr<void> _goZoom(
+      TutoappZoomEvent event, Emitter<TutoappState> emit) async {
+    Uri url = Uri.parse("https://www.google.com/");
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
   }
 }
