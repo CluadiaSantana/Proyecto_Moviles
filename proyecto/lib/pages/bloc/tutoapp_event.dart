@@ -31,10 +31,13 @@ class TutoappSelectSubjectEvent extends TutoappEvent {
 }
 
 class TutoappCompleteAgendEvent extends TutoappEvent {
-  final String horario;
+  final String hour;
+  final String date;
+  final String description;
 
-  TutoappCompleteAgendEvent({required this.horario});
+  TutoappCompleteAgendEvent(
+      {required this.hour, required this.date, required this.description});
 
   @override
-  List<Object> get props => [horario];
+  List<Object> get props => [hour, date, description];
 }

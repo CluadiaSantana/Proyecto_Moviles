@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:dart_date/dart_date.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
 
@@ -65,6 +66,12 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     "Quinto",
     "Sexto"
   ];
+
+  List<String> date_list = ["na"];
+  String hour_choice = "Escoge tu horario";
+  String date_choice = "Escoge la fecha";
+  String grade_choice = "na";
+  String subject_choice = "na";
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
     on<TutoappSelectSubjectEvent>(_navAgenda);
@@ -81,8 +88,20 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _navAgenda(
       TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) {
+    grade_choice = number[event.grade - 1];
+    subject_choice = event.subject;
+    date_list.clear();
+    for (int i = 0; i <= 4; i++) {
+      date_list.add(
+          (Date.tomorrow + Duration(days: i + 1)).format('MMMM dd').toString());
+      print(date_list[i]);
+    }
     emit(TutoappAgendaChoiceState(
-        grade: number[event.grade - 1], subject: event.subject));
+        grade: grade_choice,
+        subject: subject_choice,
+        date: date_choice,
+        hour: hour_choice,
+        data_list: date_list));
   }
 
   FutureOr<void> _seeAgenda(

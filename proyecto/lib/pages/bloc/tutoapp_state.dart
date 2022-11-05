@@ -20,10 +20,18 @@ class TutoappListState extends TutoappState {
 class TutoappAgendaChoiceState extends TutoappState {
   final String grade;
   final String subject;
+  final String date;
+  final String hour;
+  final List<String> data_list;
 
-  TutoappAgendaChoiceState({required this.grade, required this.subject});
+  TutoappAgendaChoiceState(
+      {required this.grade,
+      required this.subject,
+      required this.date,
+      required this.hour,
+      required this.data_list});
   @override
-  List<Object> get props => [grade, subject];
+  List<Object> get props => [grade, subject, date, hour, data_list];
 }
 
 class TutoappCompleteAgendState extends TutoappState {}

@@ -3,17 +3,15 @@ import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AgendarTutoria extends StatelessWidget {
-  AgendarTutoria({super.key});
-  final List<String> clases = [
-    'Primero',
-    'Segundo',
-    'Tercero',
-    'Cuarto',
-    'Quinto',
-    'Sexto'
-  ];
-  final List<String> horario = [
+class AgendarTutoria extends StatefulWidget {
+  const AgendarTutoria({super.key});
+
+  @override
+  State<AgendarTutoria> createState() => _AgendarTutoriaState();
+}
+
+class _AgendarTutoriaState extends State<AgendarTutoria> {
+  final List<String> _horario = [
     '0900 - 1100',
     '1100 - 1300',
     '1300 - 1500',
@@ -21,8 +19,9 @@ class AgendarTutoria extends StatelessWidget {
     '1700 - 1900',
     '1900 - 2100'
   ];
-
-  //final List<String> colores = ['amber[600]','blue[600]','lightGreen[600]','cyan[600]','purple[600]','orange[600]'];
+  String _hour = "Escoge el horario";
+  String _date = "Escoge la fecha";
+  var _help = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +72,16 @@ class AgendarTutoria extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _horario(),
+                  _choices('Fecha', state.data_list, context),
+                  _choices('Horario', _horario, context),
                   _description(),
                   ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<TutoappBloc>(context).add(
-                          TutoappCompleteAgendEvent(horario: '0900 - 1100'));
+                          TutoappCompleteAgendEvent(
+                              hour: _hour,
+                              date: _date,
+                              description: _help.value.text));
                     },
                     child: Text("Agendar Tutoria"),
                     style: ElevatedButton.styleFrom(
@@ -111,6 +114,7 @@ class AgendarTutoria extends StatelessWidget {
           ),
         ),
         TextField(
+          controller: _help,
           decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Escribe una breve descripcion de tus dudas'),
@@ -119,13 +123,13 @@ class AgendarTutoria extends StatelessWidget {
     );
   }
 
-  Container _horario() {
+  Container _choices(String title, List<String> list_choice, context) {
     return Container(
       padding: EdgeInsets.only(bottom: 10),
       child: Column(
         children: [
           Text(
-            "Horario",
+            title,
             style: TextStyle(
                 fontFamily: 'Chewy-Regular',
                 fontSize: 32,
@@ -140,32 +144,34 @@ class AgendarTutoria extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 15),
             child: Column(
               children: [
-                SizedBox(
-                  height: 100,
-                  width: 400,
-                  child: ListView.separated(
-                    padding: EdgeInsets.all(10),
-                    itemCount: horario.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Text(
-                        horario[index],
-                        style: TextStyle(
-                            fontFamily: 'Chewy-Regular',
-                            fontSize: 24,
-                            color: Colors.amber[600]),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(
-                      thickness: 1,
-                      color: Colors.pink[100],
-                      indent: 5,
-                    ),
+                DropdownButton(
+                  items: list_choice.map((String value) {
+                    return DropdownMenuItem(value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (String? value) {
+                    _hour = title == "Horario" ? value! : _hour;
+                    _date = title == "Fecha" ? value! : _date;
+                    setState(() {});
+                  },
+                  hint: Text(
+                    title == "Horario" ? _hour : _date,
+                    style: TextStyle(
+                        fontFamily: 'Chewy-Regular',
+                        color: Colors.amber[600],
+                        fontSize: 20),
                   ),
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: TextStyle(
+                      fontFamily: 'Chewy-Regular', color: Colors.amber[600]),
                 ),
               ],
             ),
           ),
+          Divider(
+            thickness: 2,
+            color: Colors.red,
+          )
         ],
       ),
     );
