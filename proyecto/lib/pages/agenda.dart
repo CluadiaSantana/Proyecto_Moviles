@@ -47,19 +47,25 @@ class Agenda extends StatelessWidget {
             return Column(
               children: [
                 _tutoAg(context, "Primero-Matematicas", "2:00 - 2:30 PM",
-                    Colors.amber[600]!),
+                    "06 Noviembre", Colors.amber[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
                 _tutoAg(context, "Tercero-Formacion Civica y Etica",
-                    "2:00 - 2:30 PM", Colors.lightGreen[600]!),
+                    "2:00 - 2:30 PM", "07 Noviembre", Colors.lightGreen[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
                 _tutoAg(context, "Primero-Español", "2:00 - 2:30 PM",
-                    Colors.amber[600]!),
+                    "08 Noviembre", Colors.amber[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
                 _tutoAg(context, "Primero-Lectura", "2:00 - 2:30 PM",
-                    Colors.amber[600]!),
+                    "09 Noviembre", Colors.amber[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
                 _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
-                    Colors.lightBlue[600]!),
+                    "10 Noviembre", Colors.lightBlue[600]!),
+                Divider(thickness: 2, color: Colors.green[400]),
+                _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
+                    "10 Noviembre", Colors.lightBlue[600]!),
+                Divider(thickness: 2, color: Colors.green[400]),
+                _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
+                    "10 Noviembre", Colors.lightBlue[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
               ],
             );
@@ -67,7 +73,7 @@ class Agenda extends StatelessWidget {
         ));
   }
 
-  Row _tutoAg(context, String title, String horario, Color col) {
+  Row _tutoAg(context, String title, String horario, String fecha, Color col) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -86,6 +92,13 @@ class Agenda extends StatelessWidget {
               ),
               Text(
                 horario,
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.green[600],
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                fecha,
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.green[600],

@@ -124,7 +124,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _goZoom(
       TutoappZoomEvent event, Emitter<TutoappState> emit) async {
-    Uri url = Uri.parse("https://www.google.com/");
+    Uri url = Uri.parse("https://zoom.us");
     await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
