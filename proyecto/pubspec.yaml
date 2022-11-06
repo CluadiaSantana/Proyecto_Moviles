@@ -36,6 +36,8 @@ dependencies:
   equatable:
   dart_date: 
   url_launcher:
+  font_awesome_flutter:
+  auth_buttons:
 
 
   # The following adds the Cupertino Icons font to your application.
