@@ -43,3 +43,14 @@ class TutoappCompleteAgendEvent extends TutoappEvent {
   @override
   List<Object> get props => [hour, date, description];
 }
+
+class TutoAppRegisterEvent extends TutoappEvent {
+  final String name;
+  final String lastName;
+  final String email;
+
+  TutoAppRegisterEvent(this.name, this.lastName, this.email);
+
+  @override
+  List<Object> get props => [name, lastName, email];
+}

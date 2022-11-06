@@ -39,3 +39,8 @@ class TutoappCompleteAgendState extends TutoappState {}
 class TutoappReagendarState extends TutoappState {}
 
 class TutoappCancelarState extends TutoappState {}
+
+class TutoappRegisterState {
+ 
+}
+
