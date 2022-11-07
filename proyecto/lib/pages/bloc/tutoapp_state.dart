@@ -34,7 +34,7 @@ class TutoappAgendaChoiceState extends TutoappState {
   List<Object> get props => [grade, subject, date, hour, data_list];
 }
 
-class TutoappCompleteAgendState extends TutoappState {}
+class TutoappSeeAgendState extends TutoappState {}
 
 class TutoappReagendarState extends TutoappState {}
 

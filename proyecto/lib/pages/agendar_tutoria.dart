@@ -50,7 +50,7 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
       body: SingleChildScrollView(
         child: BlocConsumer<TutoappBloc, TutoappState>(
           listener: (context, state) {
-            if (state is TutoappCompleteAgendState) {
+            if (state is TutoappSeeAgendState) {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Agenda()));
             }

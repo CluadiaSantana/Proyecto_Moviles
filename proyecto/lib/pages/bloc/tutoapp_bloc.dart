@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -69,6 +70,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     "Sexto"
   ];
 
+  //1 Aqui va la lista de la coleccion
+
   List<String> date_list = ["na"];
   String hour_choice = "Escoge tu horario";
   String date_choice = "Escoge la fecha";
@@ -109,7 +112,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _seeAgenda(
       TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) {
-    emit(TutoappCompleteAgendState());
+    emit(TutoappSeeAgendState());
   }
 
   FutureOr<void> _cancelar(

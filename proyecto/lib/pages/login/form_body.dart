@@ -6,13 +6,11 @@ class FormBody extends StatelessWidget {
   // cambiar a un solo value changed que reciba enum de login
   final ValueChanged<bool> onAnonymousLoginTap;
   final ValueChanged<bool> onGoogleLoginTap;
-  final ValueChanged<bool> onFacebookLoginTap;
 
   FormBody({
     Key? key,
     required this.onAnonymousLoginTap,
     required this.onGoogleLoginTap,
-    required this.onFacebookLoginTap,
   }) : super(key: key);
 
   @override
@@ -21,142 +19,91 @@ class FormBody extends StatelessWidget {
       children: [
         // TODO: utilizar un logo en vez de un container azul
         Container(
-          color: Colors.blue,
           height: 256,
           width: 256,
+          child: Image.asset('assets/images/Logo.jpg'),
         ),
-        SizedBox(height: 20),
+
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             "BIENVENIDO",
             style: TextStyle(
               fontSize: 28,
-              fontWeight: FontWeight.bold,
-              shadows: [
-                Shadow(
-                  color: Colors.black.withOpacity(0.5),
-                  offset: Offset(1, 2),
-                  blurRadius: 1.0,
-                ),
-              ],
+              fontFamily: 'Chewy-Regular',
+              color: Colors.green[400],
             ),
           ),
-        ),
-        SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 0,
-                indent: 8,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                "Acceso con correo.",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 8,
-                indent: 0,
-              ),
-            ),
-          ],
         ),
         SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: Container(
-                height: 40,
-                margin: EdgeInsets.symmetric(horizontal: 32),
-                child: MaterialButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  onPressed: () => onAnonymousLoginTap(true),
-                  color: Colors.black,
-                  child: Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.mask,
-                        color: Colors.grey[200],
-                      ),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: Text(
-                          "Usuario anonimo",
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 24),
-        Row(
-          children: [
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 0,
-                indent: 8,
-              ),
-            ),
             Container(
+              height: 40,
               margin: EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                "Acceso rapido.",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Divider(
-                color: Colors.black,
-                endIndent: 8,
-                indent: 0,
+                onPressed: () => onAnonymousLoginTap(true),
+                color: Color.fromARGB(255, 250, 250, 250),
+                child: Row(
+                  children: [
+                    SizedBox(width: 14),
+                    Text(
+                      "SignUp",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.amber[600],
+                          fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
         ),
         SizedBox(height: 24),
-        // login buttons
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 32),
-          child: Row(
-            children: [
-              Expanded(
-                child: FacebookAuthButton(
-                  onPressed: () => onFacebookLoginTap(true),
-                  text: "Iniciar con Facebook",
-                  style: AuthButtonStyle(borderRadius: 18),
+        TextField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: 'Correo'),
+        ),
+        SizedBox(height: 24),
+        TextField(
+          decoration: InputDecoration(
+              border: OutlineInputBorder(), labelText: 'Contraseña'),
+        ),
+        SizedBox(height: 14),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 40,
+              margin: EdgeInsets.symmetric(horizontal: 32),
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ),
+                onPressed: () => onAnonymousLoginTap(true),
+                color: Color.fromARGB(255, 250, 250, 250),
+                child: Row(
+                  children: [
+                    SizedBox(width: 14),
+                    Text(
+                      "Entar",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.lightBlue[600],
+                          fontSize: 20),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-
-        SizedBox(height: 14),
+        SizedBox(height: 24),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
           child: Row(
@@ -166,7 +113,6 @@ class FormBody extends StatelessWidget {
                   onPressed: () => onGoogleLoginTap(true),
                   text: "Iniciar con Google",
                   style: AuthButtonStyle(borderRadius: 18),
-                  darkMode: false,
                 ),
               ),
             ],

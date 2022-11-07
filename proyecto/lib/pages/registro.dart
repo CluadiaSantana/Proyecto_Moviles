@@ -36,25 +36,28 @@ class _RegistroState extends State<Registro> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              inputTitle("Nombre"),
-              inputField("Nombre"),
-              inputTitle("Apellido"),
-              inputField("Apellido"),
-              inputTitle("Correo"),
-              inputField("Correo Electronico"),
-              inputTitle("Tutor o Estudiante?"),
-              radioButtons("Tutor", UserType.tutor),
-              radioButtons("Estudiante", UserType.estudiante),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 60, 8, 0),
-                child: ElevatedButton(
-                  child: const Text('Registrarse'),
-                  onPressed: () => Navigator.pop(context),
+          child: Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            child: Column(
+              children: [
+                inputTitle("Nombre"),
+                inputField("Nombre"),
+                inputTitle("Apellido"),
+                inputField("Apellido"),
+                inputTitle("Correo"),
+                inputField("Correo Electronico"),
+                inputTitle("Tutor o Estudiante?"),
+                radioButtons("Tutor", UserType.tutor),
+                radioButtons("Estudiante", UserType.estudiante),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 60, 8, 0),
+                  child: ElevatedButton(
+                    child: const Text('Registrarse'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }
