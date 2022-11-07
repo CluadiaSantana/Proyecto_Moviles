@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Tutoappa',
       theme: ThemeData(appBarTheme: AppBarTheme(color: Colors.green)),
-      home: Registro(),
+      home: HomePage(),
     );
   }
 }

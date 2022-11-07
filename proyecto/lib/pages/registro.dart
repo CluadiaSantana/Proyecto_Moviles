@@ -46,6 +46,8 @@ class _RegistroState extends State<Registro> {
                 inputField("Apellido"),
                 inputTitle("Correo"),
                 inputField("Correo Electronico"),
+                inputTitle("Password"),
+                inputField("Password"),
                 inputTitle("Tutor o Estudiante?"),
                 radioButtons("Tutor", UserType.tutor),
                 radioButtons("Estudiante", UserType.estudiante),

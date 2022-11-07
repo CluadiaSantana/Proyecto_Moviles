@@ -1,6 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 
 class FormBody extends StatelessWidget {
   // cambiar a un solo value changed que reciba enum de login
@@ -12,18 +13,17 @@ class FormBody extends StatelessWidget {
     required this.onAnonymousLoginTap,
     required this.onGoogleLoginTap,
   }) : super(key: key);
-
+  var _correo = TextEditingController();
+  var _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // TODO: utilizar un logo en vez de un container azul
         Container(
           height: 256,
           width: 256,
           child: Image.asset('assets/images/Logo.jpg'),
         ),
-
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
           child: Text(
@@ -46,7 +46,11 @@ class FormBody extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                onPressed: () => onAnonymousLoginTap(true),
+                onPressed: () {
+                  BlocProvider.of<TutoappBloc>(context).add(TutoAppSingInEvent(
+                      correo: _correo.value.text,
+                      password: _password.value.text));
+                },
                 color: Color.fromARGB(255, 250, 250, 250),
                 child: Row(
                   children: [
@@ -66,11 +70,13 @@ class FormBody extends StatelessWidget {
         ),
         SizedBox(height: 24),
         TextField(
+          controller: _correo,
           decoration: InputDecoration(
               border: OutlineInputBorder(), labelText: 'Correo'),
         ),
         SizedBox(height: 24),
         TextField(
+          controller: _password,
           decoration: InputDecoration(
               border: OutlineInputBorder(), labelText: 'Contraseña'),
         ),
@@ -85,7 +91,7 @@ class FormBody extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ),
-                onPressed: () => onAnonymousLoginTap(true),
+                onPressed: () {},
                 color: Color.fromARGB(255, 250, 250, 250),
                 child: Row(
                   children: [
@@ -121,10 +127,8 @@ class FormBody extends StatelessWidget {
         SizedBox(height: 24),
         Container(
           margin: EdgeInsets.symmetric(horizontal: 32),
-          // TODO:  sustituir este texto con uno real
           child: Text(
-            "Al acceder se aceptan los terminos y condiciones asi como la politica de privacidad, "
-            "mismos que pueden ser consultados en mipaginaweb.iteso.com.mx o en los ajustes de la aplicacion.",
+            "Al acceder se aceptan los terminos y condiciones asi como la politica de privacidad, ",
             textAlign: TextAlign.justify,
             style: TextStyle(fontSize: 10),
           ),

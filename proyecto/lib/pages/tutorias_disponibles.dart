@@ -30,44 +30,44 @@ class TutoriasDisponibles extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "11:00 - 12:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "11:00 - 12:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "12:00 - 13:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "12:00 - 13:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "primero de Primaria", "Matematicas", "13:00 - 14:00"),
+            espacioTutoria("primero de Primaria", "Matematicas", "08 Noviembre",
+                "13:00 - 14:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "14:00 - 15:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "14:00 - 15:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "15:00 - 16:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "15:00 - 16:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "16:00 - 17:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "16:00 - 17:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
             ),
-            espacioTutoria(
-                "Primero de Primaria", "Matematicas", "17:00 - 18:00"),
+            espacioTutoria("Primero de Primaria", "Matematicas", "08 Noviembre",
+                "17:00 - 18:00"),
             Divider(
               thickness: 2,
               color: Colors.pink[100],
@@ -78,7 +78,8 @@ class TutoriasDisponibles extends StatelessWidget {
     );
   }
 
-  Container espacioTutoria(String Grade, String Subject, String Time) {
+  Container espacioTutoria(
+      String Grade, String Subject, String date, String Time) {
     return Container(
       child: Column(
         children: [
@@ -112,6 +113,17 @@ class TutoriasDisponibles extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 100),
                 child: Text(
                   Subject,
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 100, top: 10),
+                child: Text(
+                  date,
                   style: TextStyle(fontSize: 20, color: Colors.blueGrey[300]),
                 ),
               )

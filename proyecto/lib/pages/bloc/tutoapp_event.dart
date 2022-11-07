@@ -54,3 +54,13 @@ class TutoAppRegisterEvent extends TutoappEvent {
   @override
   List<Object> get props => [name, lastName, email];
 }
+
+class TutoAppSingInEvent extends TutoappEvent {
+  final String correo;
+  final String password;
+
+  TutoAppSingInEvent({required this.correo, required this.password});
+
+  @override
+  List<Object> get props => [correo, password];
+}
