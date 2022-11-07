@@ -40,7 +40,12 @@ class TutoappReagendarState extends TutoappState {}
 
 class TutoappCancelarState extends TutoappState {}
 
-class TutoappRegisterState {
- 
-}
+class TutoappStudentStete extends TutoappState {}
 
+class TutoappTutorStete extends TutoappState {}
+
+class TutoappRegisterSuccessStete extends TutoappState {}
+
+class TutoappRegisterFailStete extends TutoappState {}
+
+class TutoappLoginFailStete extends TutoappState {}

@@ -61,12 +61,6 @@ class Agenda extends StatelessWidget {
                 _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
                     "10 Noviembre", Colors.lightBlue[600]!),
                 Divider(thickness: 2, color: Colors.green[400]),
-                _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
-                    "10 Noviembre", Colors.lightBlue[600]!),
-                Divider(thickness: 2, color: Colors.green[400]),
-                _tutoAg(context, "Quinto-Ingles", "2:00 - 2:30 PM",
-                    "10 Noviembre", Colors.lightBlue[600]!),
-                Divider(thickness: 2, color: Colors.green[400]),
               ],
             );
           },
