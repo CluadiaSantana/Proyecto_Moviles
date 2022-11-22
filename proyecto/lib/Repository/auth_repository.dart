@@ -33,14 +33,12 @@ class AuthRepository {
   }
 
   Future<void> _createUserCollectionFirebase(String user) async {
-    var userDoc = await FirebaseFirestore.instance
-        .collection("favorites")
-        .doc(user)
-        .get();
+    var userDoc =
+        await FirebaseFirestore.instance.collection("usuarios").doc(user).get();
     // Si no exite el doc, lo crea con valor default lista vacia
     if (!userDoc.exists) {
-      await FirebaseFirestore.instance.collection("favorites").doc(user).set(
-        {'list_favorites': []},
+      await FirebaseFirestore.instance.collection("usuarios").doc(user).set(
+        {'tutorias': []},
       );
     } else {
       // Si ya existe el doc return

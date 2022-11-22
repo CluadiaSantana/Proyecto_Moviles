@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
-import 'package:proyecto/pages/login/login_form.dart';
+import 'package:proyecto/pages/login/login.dart';
 
 class Registro extends StatefulWidget {
   const Registro({super.key});
@@ -29,7 +29,7 @@ class _RegistroState extends State<Registro> {
         }
         if (state is TutoappRegisterSuccessStete) {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => LoginForm()));
+              .push(MaterialPageRoute(builder: (context) => Login()));
         }
       },
       builder: (context, state) {
