@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -12,9 +13,46 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (() {}), icon: Icon(Icons.menu)),
+        // leading: IconButton(
+        //     onPressed: (() {
+        //       BlocProvider.of<TutoappBloc>(context)
+        //           .add(TutoappMenuEvent(context: context));
+        //     }),
+        //     icon: Icon(Icons.menu)),
         centerTitle: true,
         title: Text('TutAapp', style: TextStyle(fontFamily: 'Chewy-Regular')),
+      ),
+      drawer: Container(
+        width: 200,
+        child: Drawer(
+          child: ListView(
+            children: [
+              TextButton(
+                  onPressed: () {},
+                  child: Text("Home",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.blueGrey[300],
+                          fontSize: 20))),
+              TextButton(
+                  onPressed: () {},
+                  child: Text("Agenda",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.blueGrey[300],
+                          fontSize: 20))),
+              TextButton(
+                  onPressed: () {
+                    BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+                  },
+                  child: Text("Log Out",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.red,
+                          fontSize: 20))),
+            ],
+          ),
+        ),
       ),
       body: Center(
         child: Padding(
@@ -27,6 +65,9 @@ class HomePage extends StatelessWidget {
               } else if (state is TutoappAgendaChoiceState) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AgendarTutoria()));
+              } else if (state is TutoappMenuStete) {
+                Scaffold.of(context).showBottomSheet((context) =>
+                    SizedBox(height: 900, width: 250, child: Text("Hola")));
               }
             },
             builder: (context, state) {

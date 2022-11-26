@@ -84,6 +84,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappCancelarEvent>(_cancelar);
     on<TutoappReagendarEvent>(_reagendar);
     on<TutoappZoomEvent>(_goZoom);
+    on<TutoappMenuEvent>(_hamburgerMenu);
   }
 
   FutureOr<void> _showList(
@@ -133,5 +134,15 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       url,
       mode: LaunchMode.externalApplication,
     );
+  }
+
+  FutureOr<void> _hamburgerMenu(
+      TutoappMenuEvent event, Emitter<TutoappState> emit) {
+    if (state is TutoappMenuStete) {
+      Navigator.pop(event.context);
+      emit(TutoappInitial());
+    } else {
+      emit(TutoappMenuStete());
+    }
   }
 }

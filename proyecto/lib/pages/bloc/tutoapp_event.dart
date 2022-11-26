@@ -69,3 +69,9 @@ class TutoAppSingInEvent extends TutoappEvent {
   @override
   List<Object> get props => [correo, password];
 }
+
+class TutoappMenuEvent extends TutoappEvent {
+  final BuildContext context;
+
+  TutoappMenuEvent({required this.context});
+}
