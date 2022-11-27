@@ -14,3 +14,5 @@ class AnonymousAuthEvent extends AuthEvent {}
 class GoogleAuthEvent extends AuthEvent {}
 
 class SignOutEvent extends AuthEvent {}
+
+class FingerEvent extends AuthEvent {}

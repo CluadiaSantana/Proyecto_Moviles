@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
             return HomePage();
           } else if (state is UnAuthState ||
               state is AuthErrorState ||
-              state is SignOutSuccessState) {
+              state is SignOutSuccessState ||
+              state is AuthMidWayState) {
             return Login();
           }
           return Center(child: CircularProgressIndicator());

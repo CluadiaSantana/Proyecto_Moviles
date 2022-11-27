@@ -9,6 +9,8 @@ abstract class AuthState extends Equatable {
 
 class AuthInitial extends AuthState {}
 
+class AuthMidWayState extends AuthState {}
+
 class AuthSuccessState extends AuthState {}
 
 class UnAuthState extends AuthState {}
@@ -18,3 +20,5 @@ class SignOutSuccessState extends AuthState {}
 class AuthErrorState extends AuthState {}
 
 class AuthAwaitingState extends AuthState {}
+
+class AuthFingerprintWaitingState extends AuthState {}

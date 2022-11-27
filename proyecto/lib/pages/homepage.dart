@@ -13,12 +13,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: IconButton(
-        //     onPressed: (() {
-        //       BlocProvider.of<TutoappBloc>(context)
-        //           .add(TutoappMenuEvent(context: context));
-        //     }),
-        //     icon: Icon(Icons.menu)),
         centerTitle: true,
         title: Text('TutAapp', style: TextStyle(fontFamily: 'Chewy-Regular')),
       ),
@@ -65,9 +59,6 @@ class HomePage extends StatelessWidget {
               } else if (state is TutoappAgendaChoiceState) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AgendarTutoria()));
-              } else if (state is TutoappMenuStete) {
-                Scaffold.of(context).showBottomSheet((context) =>
-                    SizedBox(height: 900, width: 250, child: Text("Hola")));
               }
             },
             builder: (context, state) {

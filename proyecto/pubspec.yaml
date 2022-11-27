@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore:
   google_sign_in:
   flutterfire_ui:
+  local_auth:
 
 
   # The following adds the Cupertino Icons font to your application.
