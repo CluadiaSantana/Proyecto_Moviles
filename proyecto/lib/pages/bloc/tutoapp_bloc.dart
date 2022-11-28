@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
 
@@ -77,6 +77,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   String date_choice = "Escoge la fecha";
   String grade_choice = "na";
   String subject_choice = "na";
+  String role = '';
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
     on<TutoappSelectSubjectEvent>(_navAgenda);
@@ -85,10 +87,18 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappReagendarEvent>(_reagendar);
     on<TutoappZoomEvent>(_goZoom);
     on<TutoappMenuEvent>(_hamburgerMenu);
+    on<TutoappRoleEvent>(_rolechoice);
   }
 
   FutureOr<void> _showList(
-      TutoappSelectGradeEvent event, Emitter<TutoappState> emit) {
+      TutoappSelectGradeEvent event, Emitter<TutoappState> emit) async {
+    if (role == '') {
+      var doc = await FirebaseFirestore.instance
+          .collection("usuarios")
+          .doc(_auth.currentUser!.uid)
+          .get();
+      role = doc.data()?['role'];
+    }
     List<String> subject = grade[event.grade]!;
     emit(TutoappListState(subject: subject, grade: event.grade));
   }
@@ -144,5 +154,15 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     } else {
       emit(TutoappMenuStete());
     }
+  }
+
+  FutureOr<void> _rolechoice(
+      TutoappRoleEvent event, Emitter<TutoappState> emit) async {
+    await FirebaseFirestore.instance
+        .collection("usuarios")
+        .doc(_auth.currentUser!.uid)
+        .update({'role': event.role});
+    role = event.role;
+    emit(TutoappHomeStete());
   }
 }

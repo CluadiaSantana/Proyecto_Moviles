@@ -13,6 +13,8 @@ class AuthMidWayState extends AuthState {}
 
 class AuthSuccessState extends AuthState {}
 
+class AuthRoleState extends AuthState {}
+
 class UnAuthState extends AuthState {}
 
 class SignOutSuccessState extends AuthState {}

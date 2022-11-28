@@ -45,3 +45,5 @@ class TutoappStudentStete extends TutoappState {}
 class TutoappTutorStete extends TutoappState {}
 
 class TutoappMenuStete extends TutoappState {}
+
+class TutoappHomeStete extends TutoappState {}

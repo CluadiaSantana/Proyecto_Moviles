@@ -24,7 +24,6 @@ class AuthRepository {
   Future<void> signInWithGoogle() async {
     //Google sign in
     final googleUser = await _googleSignIn.signIn();
-    print("hola");
     final googleAuth = await googleUser!.authentication;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
@@ -40,8 +39,9 @@ class AuthRepository {
     // Si no exite el doc, lo crea con valor default lista vacia
     if (!userDoc.exists) {
       await FirebaseFirestore.instance.collection("usuarios").doc(user).set(
-        {'tutorias': []},
+        {'role': "null"},
       );
+      return null;
     } else {
       // Si ya existe el doc return
       return;
@@ -65,5 +65,14 @@ class AuthRepository {
     }
 
     return isAuthenticated;
+  }
+
+  Future<String> getRole() async {
+    var doc = await FirebaseFirestore.instance
+        .collection("usuarios")
+        .doc(_auth.currentUser!.uid)
+        .get();
+    String role = doc.data()?['role'];
+    return role;
   }
 }

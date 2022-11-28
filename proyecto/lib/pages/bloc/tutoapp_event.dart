@@ -75,3 +75,9 @@ class TutoappMenuEvent extends TutoappEvent {
 
   TutoappMenuEvent({required this.context});
 }
+
+class TutoappRoleEvent extends TutoappEvent {
+  final String role;
+
+  TutoappRoleEvent({required this.role});
+}
