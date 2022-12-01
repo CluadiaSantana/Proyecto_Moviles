@@ -12,12 +12,12 @@ class AgendarTutoria extends StatefulWidget {
 
 class _AgendarTutoriaState extends State<AgendarTutoria> {
   final List<String> _horario = [
-    '0900 - 1100',
-    '1100 - 1300',
-    '1300 - 1500',
-    '1500 - 1700',
-    '1700 - 1900',
-    '1900 - 2100'
+    '0900-1100',
+    '1100-1300',
+    '1300-1500',
+    '1500-1700',
+    '1700-1900',
+    '1900-2100'
   ];
   String _hour = "Escoge el horario";
   String _date = "Escoge la fecha";

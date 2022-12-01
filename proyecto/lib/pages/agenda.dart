@@ -7,12 +7,12 @@ class Agenda extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final List<String> horario = [
-    '0900 - 1100',
-    '1100 - 1300',
-    '1300 - 1500',
-    '1500 - 1700',
-    '1700 - 1900',
-    '1900 - 2100'
+    '0900-1100',
+    '1100-1300',
+    '1300-1500',
+    '1500-1700',
+    '1700-1900',
+    '1900-2100'
   ];
 
   @override

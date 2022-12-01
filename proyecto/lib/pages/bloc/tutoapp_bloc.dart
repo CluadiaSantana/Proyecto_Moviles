@@ -6,6 +6,8 @@ import 'package:dart_date/dart_date.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+import 'package:proyecto/Repository/tutorias_repository.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
 
@@ -81,6 +83,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   String subject_choice = "na";
   String role = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final tuto = Tutorias();
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
     on<TutoappSelectSubjectEvent>(_navAgenda);
@@ -95,11 +98,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   FutureOr<void> _showList(
       TutoappSelectGradeEvent event, Emitter<TutoappState> emit) async {
     if (role == '') {
-      var doc = await FirebaseFirestore.instance
-          .collection("usuarios")
-          .doc(_auth.currentUser!.uid)
-          .get();
-      role = doc.data()?['role'];
+      role = await tuto.role();
     }
     List<String> subject = grade[event.grade]!;
     emit(TutoappListState(subject: subject, grade: event.grade));
@@ -109,12 +108,13 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) {
     grade_choice = number[event.grade - 1];
     subject_choice = event.subject;
+    print(role);
     if (role == 'Alumno') {
+      print("Alumno");
       date_list.clear();
       for (int i = 0; i <= 4; i++) {
-        date_list.add((Date.tomorrow + Duration(days: i + 1))
-            .format('MMMM dd')
-            .toString());
+        date_list.add(
+            (Date.tomorrow + Duration(days: i + 1)).format('MMMM dd yyyy'));
       }
       emit(TutoappAgendaChoiceState(
           grade: grade_choice,
@@ -127,8 +127,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       subject_choice = event.subject;
       date_list.clear();
       for (int i = 0; i <= 6; i++) {
-        date_list
-            .add((Date.today + Duration(days: i)).format('MMMM dd').toString());
+        date_list.add((Date.today + Duration(days: i)).format('MMMM dd yyyy'));
       }
       emit(TutoappSelectTutoState(
           grade: grade_choice,
@@ -141,8 +140,24 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   }
 
   FutureOr<void> _seeAgenda(
-      TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) {
-    emit(TutoappSeeAgendState());
+      TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) async {
+    var num = await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .get()
+        .then((snap) => snap.size);
+    num = num + 1;
+    String name = 'Tutoria' + '-' + num.toString();
+    final split = event.hour.split('-');
+    if (event.date != 'Escoge la fecha' && event.hour != 'Escoge tu horario') {
+      tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
+          event.description);
+
+      tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
+          event.description);
+      var tutorias = await tuto.getTuto('alumno');
+      print(tutorias);
+    }
+    //emit(TutoappSeeAgendState());
   }
 
   FutureOr<void> _cancelar(
