@@ -75,6 +75,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   List<String> date_list = ["na"];
   String hour_choice = "Escoge tu horario";
   String date_choice = "Escoge la fecha";
+  String hour_start_choice = "0900";
+  String hour_end_choice = "2100";
   String grade_choice = "na";
   String subject_choice = "na";
   String role = '';
@@ -107,18 +109,35 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) {
     grade_choice = number[event.grade - 1];
     subject_choice = event.subject;
-    date_list.clear();
-    for (int i = 0; i <= 4; i++) {
-      date_list.add(
-          (Date.tomorrow + Duration(days: i + 1)).format('MMMM dd').toString());
-      print(date_list[i]);
+    if (role == 'Alumno') {
+      date_list.clear();
+      for (int i = 0; i <= 4; i++) {
+        date_list.add((Date.tomorrow + Duration(days: i + 1))
+            .format('MMMM dd')
+            .toString());
+      }
+      emit(TutoappAgendaChoiceState(
+          grade: grade_choice,
+          subject: subject_choice,
+          date: date_choice,
+          hour: hour_choice,
+          data_list: date_list));
+    } else {
+      grade_choice = number[event.grade - 1];
+      subject_choice = event.subject;
+      date_list.clear();
+      for (int i = 0; i <= 6; i++) {
+        date_list
+            .add((Date.today + Duration(days: i)).format('MMMM dd').toString());
+      }
+      emit(TutoappSelectTutoState(
+          grade: grade_choice,
+          subject: subject_choice,
+          date: date_choice,
+          hourStart: hour_start_choice,
+          hourEnd: hour_end_choice,
+          data_list: date_list));
     }
-    emit(TutoappAgendaChoiceState(
-        grade: grade_choice,
-        subject: subject_choice,
-        date: date_choice,
-        hour: hour_choice,
-        data_list: date_list));
   }
 
   FutureOr<void> _seeAgenda(

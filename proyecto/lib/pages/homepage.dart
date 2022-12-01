@@ -3,6 +3,7 @@ import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
+import 'package:proyecto/pages/tutorias_disponibles.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -59,6 +60,9 @@ class HomePage extends StatelessWidget {
               } else if (state is TutoappAgendaChoiceState) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AgendarTutoria()));
+              } else if (state is TutoappSelectTutoState) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => TutoriasDisponibles()));
               }
             },
             builder: (context, state) {

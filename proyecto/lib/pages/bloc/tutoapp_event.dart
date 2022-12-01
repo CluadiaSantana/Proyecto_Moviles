@@ -44,22 +44,6 @@ class TutoappCompleteAgendEvent extends TutoappEvent {
   List<Object> get props => [hour, date, description];
 }
 
-class TutoAppRegisterEvent extends TutoappEvent {
-  final String name;
-  final String lastName;
-  final String email;
-  final String password;
-
-  TutoAppRegisterEvent(
-      {required this.name,
-      required this.lastName,
-      required this.email,
-      required this.password});
-
-  @override
-  List<Object> get props => [name, lastName, email, password];
-}
-
 class TutoAppSingInEvent extends TutoappEvent {
   final String correo;
   final String password;

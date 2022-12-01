@@ -40,9 +40,25 @@ class TutoappReagendarState extends TutoappState {}
 
 class TutoappCancelarState extends TutoappState {}
 
-class TutoappStudentStete extends TutoappState {}
+class TutoappSelectTutoState extends TutoappState {
+  final String grade;
+  final String subject;
+  final String date;
+  final String hourStart;
+  final String hourEnd;
+  final List<String> data_list;
 
-class TutoappTutorStete extends TutoappState {}
+  TutoappSelectTutoState(
+      {required this.grade,
+      required this.subject,
+      required this.date,
+      required this.hourStart,
+      required this.hourEnd,
+      required this.data_list});
+  @override
+  List<Object> get props =>
+      [grade, subject, date, hourStart, hourEnd, data_list];
+}
 
 class TutoappMenuStete extends TutoappState {}
 
