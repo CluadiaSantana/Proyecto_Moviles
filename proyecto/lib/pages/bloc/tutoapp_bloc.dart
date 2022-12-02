@@ -4,9 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 import 'package:proyecto/Repository/tutorias_repository.dart';
 part 'tutoapp_event.dart';
 part 'tutoapp_state.dart';
@@ -80,7 +77,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   String grade_choice = "na";
   String subject_choice = "na";
   String role = '';
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final tuto = Tutorias();
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
@@ -92,6 +88,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappMenuEvent>(_hamburgerMenu);
     on<TutoappRoleEvent>(_rolechoice);
     on<TutoappGoAgendaEvent>(_seeAgenda);
+    on<TutoappHomeEvent>(_GoHome);
   }
 
   FutureOr<void> _showList(
@@ -140,10 +137,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _addAgenda(
       TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) async {
-    var num = await FirebaseFirestore.instance
-        .collection("Tutorias")
-        .get()
-        .then((snap) => snap.size);
+    var num = await tuto.number_document();
     num = num + 1;
     String name = 'Tutoria' + '-' + num.toString();
     final split = event.hour.split('-');
@@ -153,7 +147,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
       tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
           event.description);
-      var tutorias = await tuto.getTuto('alumno');
+      List<dynamic> tutorias = await tuto.getTuto('alumno');
       if (tutorias.length > 0) {
         emit(TutoappSeeAgendState(tuto_list: tutorias));
       }
@@ -203,11 +197,15 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _seeAgenda(
       TutoappGoAgendaEvent event, Emitter<TutoappState> emit) async {
-    print("object");
     if (role == '') {
       role = await tuto.role();
     }
     var tutorias = await tuto.getTuto(role.toLowerCase());
+    print(tutorias);
     emit(TutoappSeeAgendState(tuto_list: tutorias));
+  }
+
+  FutureOr<void> _GoHome(TutoappHomeEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappHomeState());
   }
 }

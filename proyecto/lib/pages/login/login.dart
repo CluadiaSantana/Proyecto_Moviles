@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto/pages/homepage.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
+import 'package:proyecto/pages/rolepage.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -15,46 +17,62 @@ class Login extends StatelessWidget {
           if (state is AuthMidWayState) {
             Scaffold.of(context)
                 .showBottomSheet((context) => _fingerprintOption(context));
-          } else if (state is AuthFingerprintWaitingState) {}
+          } else if (state is AuthFingerprintWaitingState) {
+          } else if (state is AuthSuccessState) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => HomePage()));
+            ;
+          } else if (state is AuthRoleState) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => RolePage()));
+          }
         },
         builder: (context, state) {
-          return Stack(
-            children: [
-              Positioned(
+          if (state is UnAuthState ||
+              state is AuthErrorState ||
+              state is SignOutSuccessState ||
+              state is AuthMidWayState) {
+            return Stack(
+              children: [
+                Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 250,
+                    child: Image.asset(
+                      'assets/images/Logo.jpg',
+                      scale: 1.5,
+                    )),
+                Positioned(
                   left: 0,
                   right: 0,
-                  top: 0,
-                  bottom: 250,
-                  child: Image.asset(
-                    'assets/images/Logo.jpg',
-                    scale: 1.5,
-                  )),
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 200,
-                bottom: 0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GoogleAuthButton(
-                      onPressed: () {
-                        BlocProvider.of<AuthBloc>(context)
-                            .add(GoogleAuthEvent());
-                      },
-                      text: "Iniciar con Google",
-                      style: AuthButtonStyle(
-                          buttonColor: Color.fromARGB(255, 5, 134, 9),
-                          iconColor: Colors.white,
-                          textStyle: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          width: 350),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          );
+                  top: 200,
+                  bottom: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GoogleAuthButton(
+                        onPressed: () {
+                          BlocProvider.of<AuthBloc>(context)
+                              .add(GoogleAuthEvent());
+                        },
+                        text: "Iniciar con Google",
+                        style: AuthButtonStyle(
+                            buttonColor: Color.fromARGB(255, 5, 134, 9),
+                            iconColor: Colors.white,
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            width: 350),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
         },
       ),
     );

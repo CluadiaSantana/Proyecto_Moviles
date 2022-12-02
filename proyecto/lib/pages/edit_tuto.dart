@@ -3,14 +3,14 @@ import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AgendarTutoria extends StatefulWidget {
-  const AgendarTutoria({super.key});
+class EditarTutoria extends StatefulWidget {
+  const EditarTutoria({super.key});
 
   @override
-  State<AgendarTutoria> createState() => _AgendarTutoriaState();
+  State<EditarTutoria> createState() => _EditarTutoriaState();
 }
 
-class _AgendarTutoriaState extends State<AgendarTutoria> {
+class _EditarTutoriaState extends State<EditarTutoria> {
   var _help = TextEditingController();
 
   @override
@@ -35,7 +35,7 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
             // TODO: implement listener
           },
           builder: (context, state) {
-            if (state is TutoappAgendaChoiceState) {
+            if (state is TutoappEditTutoState) {
               return Column(
                 children: [
                   Container(
@@ -47,17 +47,15 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
                       children: [
                         _data("Grado", state.grade),
                         _data("Materia", state.subject),
+                        _data("Fecha", state.date),
+                        _data("Horario", state.hour),
                       ],
                     ),
                   ),
-                  _description(),
+                  _description(state.description),
                   ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<TutoappBloc>(context).add(
-                          TutoappCompleteAgendEvent(
-                              description: _help.value.text));
-                    },
-                    child: Text("Agendar Tutoria"),
+                    onPressed: () {},
+                    child: Text("Editar Tutoria"),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
                         padding: EdgeInsets.symmetric(horizontal: 30),
@@ -74,7 +72,7 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
     );
   }
 
-  Container _description() {
+  Container _description(String description) {
     return Container(
       child: Column(children: [
         Padding(
@@ -90,8 +88,7 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
         TextField(
           controller: _help,
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Escribe una breve descripcion de tus dudas'),
+              border: OutlineInputBorder(), hintText: description),
         ),
       ]),
     );

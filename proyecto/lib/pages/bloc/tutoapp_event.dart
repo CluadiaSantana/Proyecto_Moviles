@@ -91,3 +91,5 @@ class TutoappEditTutoEvent extends TutoappEvent {
   @override
   List<Object> get props => [hour, date, description];
 }
+
+class TutoappHomeEvent extends TutoappEvent {}

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/main.dart';
 import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
+import 'package:proyecto/pages/login/login.dart';
 import 'package:proyecto/pages/tutorias_disponibles.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,8 +33,8 @@ class HomePage extends StatelessWidget {
                           color: Colors.blueGrey[300],
                           fontSize: 20))),
               TextButton(
-                  onPressed: () {
-                    print('agenda');
+                  onPressed: () async {
+                    Navigator.of(context).pop();
                     BlocProvider.of<TutoappBloc>(context)
                         .add(TutoappGoAgendaEvent());
                   },
@@ -43,7 +45,9 @@ class HomePage extends StatelessWidget {
                           fontSize: 20))),
               TextButton(
                   onPressed: () {
+                    Navigator.of(context).pop();
                     BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   },
                   child: Text("Log Out",
                       style: TextStyle(
@@ -69,6 +73,7 @@ class HomePage extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => TutoriasDisponibles()));
               } else if (state is TutoappSeeAgendState) {
+                print("entro aqui");
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => Agenda()));
               }

@@ -36,27 +36,30 @@ class Tutorias {
     );
   }
 
-  Future<List<dynamic>> getTuto(String user) async {
+  Future<List<Map<String, dynamic>>> getTuto(String user) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
-    var today = Date.today.format('MMMM dd yyyy');
-    var hour = Date.today.format('HH') + '00';
-    var tutorias_list = tutorias.docs
+    var today = Date.today.format('MMMM dd yyyy HH');
+    List<Map<String, dynamic>> tutorias_list = tutorias.docs
         .where((doc) =>
             doc.data()[user] == _auth.currentUser!.uid &&
-            DateFormat('MMMM dd yyyy').parse(today) <=
-                DateFormat('MMMM dd yyyy')
-                    .parse(doc.data()['tutoria']['fecha']) &&
-            int.parse(hour) <= int.parse(doc.data()['tutoria']['horaFin']) &&
-            doc.data()['tutor'] != 'null' &&
+            DateFormat('MMMM dd yyyy HH').parse(today) <=
+                DateFormat('MMMM dd yyyy HH').parse(
+                    date_comparacion(doc.data()['tutoria'], 'horaFin')) &&
             doc.data()['activate'])
         .map((doc) => doc.data().cast<String, dynamic>())
         .toList();
+    tutorias_list = sort_list(tutorias_list);
     return tutorias_list;
   }
 
-  Future<List<dynamic>> getTutoSearch(String date_start, String date_end,
-      String start, String end, String subject, String grade) async {
+  Future<List<Map<String, dynamic>>> getTutoSearch(
+      String date_start,
+      String date_end,
+      String start,
+      String end,
+      String subject,
+      String grade) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
     var tutorias_list = tutorias.docs
@@ -91,6 +94,20 @@ class Tutorias {
         .get()
         .then((snap) => snap.size);
     return num;
+  }
+
+  static List<Map<String, dynamic>> sort_list(
+      List<Map<String, dynamic>> lista) {
+    lista.sort(((a, b) => DateFormat('MMMM dd yyyy HH')
+        .parse(date_comparacion(a['tutoria'], 'horaInicio'))
+        .compareTo(DateFormat('MMMM dd yyyy HH')
+            .parse(date_comparacion(b['tutoria'], 'horaInicio')))));
+    return lista;
+  }
+
+  static String date_comparacion(Map<String, dynamic> a, String hour) {
+    var fecha = a['fecha'] + " " + a[hour].substring(0, 2);
+    return fecha;
   }
 
   void update_role(String role) async {
