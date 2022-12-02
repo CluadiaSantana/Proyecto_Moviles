@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,11 @@ class HomePage extends StatelessWidget {
                           color: Colors.blueGrey[300],
                           fontSize: 20))),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print('agenda');
+                    BlocProvider.of<TutoappBloc>(context)
+                        .add(TutoappGoAgendaEvent());
+                  },
                   child: Text("Agenda",
                       style: TextStyle(
                           fontFamily: 'Chewy-Regular',
@@ -63,6 +68,9 @@ class HomePage extends StatelessWidget {
               } else if (state is TutoappSelectTutoState) {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => TutoriasDisponibles()));
+              } else if (state is TutoappSeeAgendState) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Agenda()));
               }
             },
             builder: (context, state) {

@@ -23,7 +23,7 @@ class _RolePageState extends State<RolePage> {
       appBar: AppBar(),
       body: BlocConsumer<TutoappBloc, TutoappState>(
         listener: (context, state) {
-          if (state is TutoappHomeStete) {
+          if (state is TutoappHomeState) {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => HomePage()));
           }

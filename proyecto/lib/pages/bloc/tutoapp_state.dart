@@ -34,7 +34,11 @@ class TutoappAgendaChoiceState extends TutoappState {
   List<Object> get props => [grade, subject, date, hour, data_list];
 }
 
-class TutoappSeeAgendState extends TutoappState {}
+class TutoappSeeAgendState extends TutoappState {
+  final List<dynamic> tuto_list;
+
+  TutoappSeeAgendState({required this.tuto_list});
+}
 
 class TutoappReagendarState extends TutoappState {}
 
@@ -60,6 +64,26 @@ class TutoappSelectTutoState extends TutoappState {
       [grade, subject, date, hourStart, hourEnd, data_list];
 }
 
-class TutoappMenuStete extends TutoappState {}
+class TutoappMenuState extends TutoappState {}
 
-class TutoappHomeStete extends TutoappState {}
+class TutoappHomeState extends TutoappState {}
+
+class TutoappEditTutoState extends TutoappState {
+  final String hour;
+  final String date;
+  final String description;
+  final String subject;
+  final String grade;
+  final String documento;
+
+  TutoappEditTutoState(
+      {required this.hour,
+      required this.date,
+      required this.description,
+      required this.subject,
+      required this.grade,
+      required this.documento});
+
+  @override
+  List<Object> get props => [hour, date, description];
+}

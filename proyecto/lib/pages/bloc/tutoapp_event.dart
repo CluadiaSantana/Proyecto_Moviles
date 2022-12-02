@@ -11,7 +11,13 @@ class TutoappReagendarEvent extends TutoappEvent {}
 
 class TutoappZoomEvent extends TutoappEvent {}
 
-class TutoappCancelarEvent extends TutoappEvent {}
+class TutoappGoAgendaEvent extends TutoappEvent {}
+
+class TutoappCancelarEvent extends TutoappEvent {
+  final String documento;
+
+  TutoappCancelarEvent({required this.documento});
+}
 
 class TutoappSelectGradeEvent extends TutoappEvent {
   final int grade;
@@ -64,4 +70,24 @@ class TutoappRoleEvent extends TutoappEvent {
   final String role;
 
   TutoappRoleEvent({required this.role});
+}
+
+class TutoappEditTutoEvent extends TutoappEvent {
+  final String hour;
+  final String date;
+  final String description;
+  final String subject;
+  final String grade;
+  final String documento;
+
+  TutoappEditTutoEvent(
+      {required this.hour,
+      required this.date,
+      required this.description,
+      required this.subject,
+      required this.grade,
+      required this.documento});
+
+  @override
+  List<Object> get props => [hour, date, description];
 }

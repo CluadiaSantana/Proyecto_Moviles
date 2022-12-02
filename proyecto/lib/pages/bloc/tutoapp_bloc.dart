@@ -72,8 +72,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     "Sexto"
   ];
 
-  //1 Aqui va la lista de la coleccion
-
   List<String> date_list = ["na"];
   String hour_choice = "Escoge tu horario";
   String date_choice = "Escoge la fecha";
@@ -87,12 +85,13 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
     on<TutoappSelectSubjectEvent>(_navAgenda);
-    on<TutoappCompleteAgendEvent>(_seeAgenda);
+    on<TutoappCompleteAgendEvent>(_addAgenda);
     on<TutoappCancelarEvent>(_cancelar);
     on<TutoappReagendarEvent>(_reagendar);
     on<TutoappZoomEvent>(_goZoom);
     on<TutoappMenuEvent>(_hamburgerMenu);
     on<TutoappRoleEvent>(_rolechoice);
+    on<TutoappGoAgendaEvent>(_seeAgenda);
   }
 
   FutureOr<void> _showList(
@@ -139,7 +138,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     }
   }
 
-  FutureOr<void> _seeAgenda(
+  FutureOr<void> _addAgenda(
       TutoappCompleteAgendEvent event, Emitter<TutoappState> emit) async {
     var num = await FirebaseFirestore.instance
         .collection("Tutorias")
@@ -155,15 +154,20 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
           event.description);
       var tutorias = await tuto.getTuto('alumno');
-      print(tutorias);
+      if (tutorias.length > 0) {
+        emit(TutoappSeeAgendState(tuto_list: tutorias));
+      }
     }
     //emit(TutoappSeeAgendState());
   }
 
   FutureOr<void> _cancelar(
-      TutoappCancelarEvent event, Emitter<TutoappState> emit) {
+      TutoappCancelarEvent event, Emitter<TutoappState> emit) async {
     print("cancelar");
+    tuto.cancelar(event.documento);
     emit(TutoappCancelarState());
+    var tutorias = await tuto.getTuto('alumno');
+    emit(TutoappSeeAgendState(tuto_list: tutorias));
   }
 
   FutureOr<void> _reagendar(
@@ -182,21 +186,28 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _hamburgerMenu(
       TutoappMenuEvent event, Emitter<TutoappState> emit) {
-    if (state is TutoappMenuStete) {
+    if (state is TutoappMenuState) {
       Navigator.pop(event.context);
       emit(TutoappInitial());
     } else {
-      emit(TutoappMenuStete());
+      emit(TutoappMenuState());
     }
   }
 
   FutureOr<void> _rolechoice(
       TutoappRoleEvent event, Emitter<TutoappState> emit) async {
-    await FirebaseFirestore.instance
-        .collection("usuarios")
-        .doc(_auth.currentUser!.uid)
-        .update({'role': event.role});
     role = event.role;
-    emit(TutoappHomeStete());
+    tuto.update_role(role);
+    emit(TutoappHomeState());
+  }
+
+  FutureOr<void> _seeAgenda(
+      TutoappGoAgendaEvent event, Emitter<TutoappState> emit) async {
+    print("object");
+    if (role == '') {
+      role = await tuto.role();
+    }
+    var tutorias = await tuto.getTuto(role.toLowerCase());
+    emit(TutoappSeeAgendState(tuto_list: tutorias));
   }
 }

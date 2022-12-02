@@ -39,7 +39,7 @@ class Tutorias {
   Future<List<dynamic>> getTuto(String user) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
-    var today = (Date.today + Duration(days: 3)).format('MMMM dd yyyy');
+    var today = Date.today.format('MMMM dd yyyy');
     var hour = Date.today.format('HH') + '00';
     var tutorias_list = tutorias.docs
         .where((doc) =>
@@ -53,5 +53,57 @@ class Tutorias {
         .map((doc) => doc.data().cast<String, dynamic>())
         .toList();
     return tutorias_list;
+  }
+
+  Future<List<dynamic>> getTutoSearch(String date_start, String date_end,
+      String start, String end, String subject, String grade) async {
+    var tutorias =
+        await FirebaseFirestore.instance.collection("Tutorias").get();
+    var tutorias_list = tutorias.docs
+        .where((doc) =>
+            DateFormat('MMMM dd yyyy').parse(date_start) <=
+                DateFormat('MMMM dd yyyy')
+                    .parse(doc.data()['tutoria']['fecha']) &&
+            DateFormat('MMMM dd yyyy').parse(date_end) >=
+                DateFormat('MMMM dd yyyy')
+                    .parse(doc.data()['tutoria']['fecha']) &&
+            int.parse(start) <=
+                int.parse(doc.data()['tutoria']['horaInicio']) &&
+            int.parse(end) >= int.parse(doc.data()['tutoria']['horaFin']) &&
+            doc.data()['tutoria']['materia'] == subject &&
+            doc.data()['tutoria']['grado'] == grade &&
+            doc.data()['activate'])
+        .map((doc) => doc.data().cast<String, dynamic>())
+        .toList();
+    return tutorias_list;
+  }
+
+  void cancelar(String documento) async {
+    await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .doc(documento)
+        .update({'activate': false});
+  }
+
+  Future<int> number_document() async {
+    var num = await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .get()
+        .then((snap) => snap.size);
+    return num;
+  }
+
+  void update_role(String role) async {
+    await FirebaseFirestore.instance
+        .collection("usuarios")
+        .doc(_auth.currentUser!.uid)
+        .update({'role': role});
+  }
+
+  void addTutor(String zoom) async {
+    await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .doc(_auth.currentUser!.uid)
+        .update({'tutor': _auth.currentUser!.uid, 'zoom': zoom});
   }
 }
