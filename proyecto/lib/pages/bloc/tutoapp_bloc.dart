@@ -88,7 +88,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappMenuEvent>(_hamburgerMenu);
     on<TutoappRoleEvent>(_rolechoice);
     on<TutoappGoAgendaEvent>(_seeAgenda);
-    on<TutoappHomeEvent>(_GoHome);
+    on<TutoappHomeEvent>(_goHome);
+    on<TutoappEditTutoEvent>(_edit);
   }
 
   FutureOr<void> _showList(
@@ -205,7 +206,11 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     emit(TutoappSeeAgendState(tuto_list: tutorias));
   }
 
-  FutureOr<void> _GoHome(TutoappHomeEvent event, Emitter<TutoappState> emit) {
+  FutureOr<void> _goHome(TutoappHomeEvent event, Emitter<TutoappState> emit) {
     emit(TutoappHomeState());
+  }
+
+  FutureOr<void> _edit(TutoappEditTutoEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappEditTutoState(documento: event.documento));
   }
 }

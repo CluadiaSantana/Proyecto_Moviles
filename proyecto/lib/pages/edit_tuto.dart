@@ -1,28 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EditarTutoria extends StatefulWidget {
-  const EditarTutoria({super.key});
+class EditTuto extends StatefulWidget {
+  const EditTuto({super.key});
 
   @override
-  State<EditarTutoria> createState() => _EditarTutoriaState();
+  State<EditTuto> createState() => _EditTutoState();
 }
 
-class _EditarTutoriaState extends State<EditarTutoria> {
+class _EditTutoState extends State<EditTuto> {
   var _help = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "TutoApp - Edita Tu Tutoria",
-          style: TextStyle(
-              fontFamily: 'Chewy-Regular',
-              fontSize: 24,
-              color: Colors.amber[600]),
+        centerTitle: true,
+        title: Text('TutAapp', style: TextStyle(fontFamily: 'Chewy-Regular')),
+      ),
+      drawer: Container(
+        width: 200,
+        child: Drawer(
+          child: ListView(
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<TutoappBloc>(context)
+                        .add(TutoappHomeEvent());
+                  },
+                  child: Text("Home",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.blueGrey[300],
+                          fontSize: 20))),
+              TextButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<TutoappBloc>(context)
+                        .add(TutoappGoAgendaEvent());
+                  },
+                  child: Text("Agenda",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.blueGrey[300],
+                          fontSize: 20))),
+              TextButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  },
+                  child: Text("Log Out",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          color: Colors.red,
+                          fontSize: 20))),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -32,7 +70,6 @@ class _EditarTutoriaState extends State<EditarTutoria> {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Agenda()));
             }
-            // TODO: implement listener
           },
           builder: (context, state) {
             if (state is TutoappEditTutoState) {
@@ -45,14 +82,18 @@ class _EditarTutoriaState extends State<EditarTutoria> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _data("Grado", state.grade),
-                        _data("Materia", state.subject),
-                        _data("Fecha", state.date),
-                        _data("Horario", state.hour),
+                        _data("Grado", state.documento['tutoria']['grado']),
+                        _data("Materia", state.documento['tutoria']['materia']),
+                        _data("Fecha", state.documento['tutoria']['fecha']),
+                        _data(
+                            "Horario",
+                            state.documento['tutoria']['horaInicio'] +
+                                '-' +
+                                state.documento['tutoria']['horaFin']),
                       ],
                     ),
                   ),
-                  _description(state.description),
+                  _description(state.documento['tutoria']['ayuda']),
                   ElevatedButton(
                     onPressed: () {},
                     child: Text("Editar Tutoria"),

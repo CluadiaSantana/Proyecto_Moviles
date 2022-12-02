@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/main.dart';
 import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/agendar_tutoria.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
-import 'package:proyecto/pages/login/login.dart';
 import 'package:proyecto/pages/tutorias_disponibles.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,7 +24,11 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<TutoappBloc>(context)
+                        .add(TutoappHomeEvent());
+                  },
                   child: Text("Home",
                       style: TextStyle(
                           fontFamily: 'Chewy-Regular',
@@ -44,7 +46,7 @@ class HomePage extends StatelessWidget {
                           color: Colors.blueGrey[300],
                           fontSize: 20))),
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     Navigator.of(context).pop();
                     BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
                     Navigator.of(context).popUntil((route) => route.isFirst);

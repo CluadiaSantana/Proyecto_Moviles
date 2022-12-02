@@ -73,23 +73,9 @@ class TutoappRoleEvent extends TutoappEvent {
 }
 
 class TutoappEditTutoEvent extends TutoappEvent {
-  final String hour;
-  final String date;
-  final String description;
-  final String subject;
-  final String grade;
-  final String documento;
+  final Map<String, dynamic> documento;
 
-  TutoappEditTutoEvent(
-      {required this.hour,
-      required this.date,
-      required this.description,
-      required this.subject,
-      required this.grade,
-      required this.documento});
-
-  @override
-  List<Object> get props => [hour, date, description];
+  TutoappEditTutoEvent({required this.documento});
 }
 
 class TutoappHomeEvent extends TutoappEvent {}

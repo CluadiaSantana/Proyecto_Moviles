@@ -34,8 +34,8 @@ class Agenda extends StatelessWidget {
                 TextButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
-                      BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      BlocProvider.of<TutoappBloc>(context)
+                          .add(TutoappGoAgendaEvent());
                     },
                     child: Text("Agenda",
                         style: TextStyle(
@@ -43,8 +43,10 @@ class Agenda extends StatelessWidget {
                             color: Colors.blueGrey[300],
                             fontSize: 20))),
                 TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      Navigator.of(context).pop();
                       BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     child: Text("Log Out",
                         style: TextStyle(
@@ -61,7 +63,6 @@ class Agenda extends StatelessWidget {
   BlocConsumer<TutoappBloc, TutoappState> _listTutorias() {
     return BlocConsumer<TutoappBloc, TutoappState>(listener: (context, state) {
       if (state is TutoappHomeState) {
-        print("entro aqui 2");
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => HomePage()));
       }
