@@ -27,6 +27,7 @@ class _EditTutoState extends State<EditTuto> {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                     BlocProvider.of<TutoappBloc>(context)
                         .add(TutoappHomeEvent());
                   },

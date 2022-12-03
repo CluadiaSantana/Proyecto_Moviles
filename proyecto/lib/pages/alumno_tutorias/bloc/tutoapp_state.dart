@@ -64,8 +64,6 @@ class TutoappSelectTutoState extends TutoappState {
       [grade, subject, date, hourStart, hourEnd, data_list];
 }
 
-class TutoappMenuState extends TutoappState {}
-
 class TutoappHomeState extends TutoappState {}
 
 class TutoappExcededState extends TutoappState {}
@@ -77,3 +75,5 @@ class TutoappEditTutoState extends TutoappState {
 }
 
 class TutoappErrorAgendaState extends TutoappState {}
+
+class TutoappErrorHoraState extends TutoappState {}

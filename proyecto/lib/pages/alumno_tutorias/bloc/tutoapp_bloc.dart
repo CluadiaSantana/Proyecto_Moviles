@@ -87,7 +87,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappCancelarEvent>(_cancelar);
     on<TutoappReagendarEvent>(_reagendar);
     on<TutoappZoomEvent>(_goZoom);
-    on<TutoappMenuEvent>(_hamburgerMenu);
     on<TutoappRoleEvent>(_rolechoice);
     on<TutoappGoAgendaEvent>(_seeAgenda);
     on<TutoappHomeEvent>(_goHome);
@@ -128,13 +127,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
           date_list
               .add((Date.today + Duration(days: i)).format('MMMM dd yyyy'));
         }
-        // emit(TutoappSelectTutoState(
-        //     grade: grade_choice,
-        //     subject: subject_choice,
-        //     date: date_choice,
-        //     hourStart: hour_start_choice,
-        //     hourEnd: hour_end_choice,
-        //     data_list: date_list));
       }
     } else {
       emit(TutoappExcededState());
@@ -148,6 +140,20 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     String name = 'Tutoria' + '-' + num.toString();
     final split = event.hour.split('-');
     if (event.date != 'Escoge la fecha' && event.hour != 'Escoge tu horario') {
+      for (dynamic tutoriad in tutorias_agendadas) {
+        if (tutoriad["tutoria"]["horaInicio"] == split[0] &&
+            event.date == tutoriad["tutoria"]["fecha"]) {
+          emit(TutoappErrorHoraState());
+          emit(TutoappAgendaChoiceState(
+              grade: grade_choice,
+              subject: subject_choice,
+              date: date_choice,
+              hour: hour_choice,
+              data_list: date_list));
+          print("agenda horario");
+          return;
+        }
+      }
       tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
           event.description);
 
@@ -192,16 +198,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       url,
       mode: LaunchMode.externalApplication,
     );
-  }
-
-  FutureOr<void> _hamburgerMenu(
-      TutoappMenuEvent event, Emitter<TutoappState> emit) {
-    if (state is TutoappMenuState) {
-      Navigator.pop(event.context);
-      emit(TutoappInitial());
-    } else {
-      emit(TutoappMenuState());
-    }
   }
 
   FutureOr<void> _rolechoice(

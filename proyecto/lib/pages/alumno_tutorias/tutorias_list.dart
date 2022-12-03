@@ -160,6 +160,7 @@ class TutoriasList extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.of(context).pop();
                   BlocProvider.of<TutoappBloc>(context).add(
                       TutoappCancelarEvent(documento: tutoria['documento']));
                 },
