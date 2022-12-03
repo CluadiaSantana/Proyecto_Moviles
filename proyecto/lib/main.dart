@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
-import 'package:proyecto/pages/homepage.dart';
+import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 import 'package:proyecto/pages/login/login.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:proyecto/pages/rolepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

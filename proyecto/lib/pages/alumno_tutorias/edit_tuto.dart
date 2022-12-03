@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/agenda.dart';
-import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/homepage.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
+import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AgendarTutoria extends StatefulWidget {
-  const AgendarTutoria({super.key});
+class EditTuto extends StatefulWidget {
+  const EditTuto({super.key});
 
   @override
-  State<AgendarTutoria> createState() => _AgendarTutoriaState();
+  State<EditTuto> createState() => _EditTutoState();
 }
 
-class _AgendarTutoriaState extends State<AgendarTutoria> {
-  final List<String> _horario = [
-    '0900-1100',
-    '1100-1300',
-    '1300-1500',
-    '1500-1700',
-    '1700-1900',
-    '1900-2100'
-  ];
-  String _hour = "Escoge el horario";
-  String _date = "Escoge la fecha";
-  var _help = TextEditingController();
-
+class _EditTutoState extends State<EditTuto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,13 +65,13 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
         child: BlocConsumer<TutoappBloc, TutoappState>(
           listener: (context, state) {
             if (state is TutoappHomeState) {
+              Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage()));
             }
-            // TODO: implement listener
           },
           builder: (context, state) {
-            if (state is TutoappAgendaChoiceState) {
+            if (state is TutoappEditTutoState) {
               return Column(
                 children: [
                   Container(
@@ -94,23 +81,21 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _data("Grado", state.grade),
-                        _data("Materia", state.subject),
+                        _data("Grado", state.documento['tutoria']['grado']),
+                        _data("Materia", state.documento['tutoria']['materia']),
+                        _data("Fecha", state.documento['tutoria']['fecha']),
+                        _data(
+                            "Horario",
+                            state.documento['tutoria']['horaInicio'] +
+                                '-' +
+                                state.documento['tutoria']['horaFin']),
                       ],
                     ),
                   ),
-                  _choices('Fecha', state.data_list, context),
-                  _choices('Horario', _horario, context),
-                  _description(),
+                  _description(state.documento['tutoria']['ayuda']),
                   ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<TutoappBloc>(context).add(
-                          TutoappCompleteAgendEvent(
-                              hour: _hour,
-                              date: _date,
-                              description: _help.value.text));
-                    },
-                    child: Text("Agendar Tutoria"),
+                    onPressed: () {},
+                    child: Text("Editar Tutoria"),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
                         padding: EdgeInsets.symmetric(horizontal: 30),
@@ -127,7 +112,8 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
     );
   }
 
-  Container _description() {
+  Container _description(String description) {
+    var _help = TextEditingController(text: description);
     return Container(
       child: Column(children: [
         Padding(
@@ -143,64 +129,9 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
         TextField(
           controller: _help,
           decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Escribe una breve descripcion de tus dudas'),
+              border: OutlineInputBorder(), hintText: description),
         ),
       ]),
-    );
-  }
-
-  Container _choices(String title, List<String> list_choice, context) {
-    return Container(
-      padding: EdgeInsets.only(bottom: 10),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontFamily: 'Chewy-Regular',
-                fontSize: 32,
-                color: Colors.blue[600]),
-            textAlign: TextAlign.left,
-          ),
-          Divider(
-            thickness: 2,
-            color: Colors.red,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Column(
-              children: [
-                DropdownButton(
-                  items: list_choice.map((String value) {
-                    return DropdownMenuItem(value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (String? value) {
-                    _hour = title == "Horario" ? value! : _hour;
-                    _date = title == "Fecha" ? value! : _date;
-                    setState(() {});
-                  },
-                  hint: Text(
-                    title == "Horario" ? _hour : _date,
-                    style: TextStyle(
-                        fontFamily: 'Chewy-Regular',
-                        color: Colors.amber[600],
-                        fontSize: 20),
-                  ),
-                  icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: TextStyle(
-                      fontFamily: 'Chewy-Regular', color: Colors.amber[600]),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 2,
-            color: Colors.red,
-          )
-        ],
-      ),
     );
   }
 

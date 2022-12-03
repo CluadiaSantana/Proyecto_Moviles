@@ -75,3 +75,5 @@ class TutoappEditTutoState extends TutoappState {
 
   TutoappEditTutoState({required this.documento});
 }
+
+class TutoappErrorAgendaState extends TutoappState {}

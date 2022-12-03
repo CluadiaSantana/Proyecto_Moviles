@@ -96,9 +96,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _showList(
       TutoappSelectGradeEvent event, Emitter<TutoappState> emit) async {
-    if (role == '') {
-      role = await tuto.role();
-    }
+    role = await tuto.role();
     List<String> subject = grade[event.grade]!;
     emit(TutoappListState(subject: subject, grade: event.grade));
   }
@@ -150,7 +148,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     String name = 'Tutoria' + '-' + num.toString();
     final split = event.hour.split('-');
     if (event.date != 'Escoge la fecha' && event.hour != 'Escoge tu horario') {
-      emit(TutoappHomeState());
       tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
           event.description);
 
@@ -163,8 +160,14 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
         List<dynamic> tuto_list = [];
         emit(TutoappSeeAgendState(tuto_list: tuto_list));
       }
-
-      //estado de faltan datos
+    } else {
+      emit(TutoappErrorAgendaState());
+      emit(TutoappAgendaChoiceState(
+          grade: grade_choice,
+          subject: subject_choice,
+          date: date_choice,
+          hour: hour_choice,
+          data_list: date_list));
     }
   }
 
@@ -179,7 +182,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _reagendar(
       TutoappReagendarEvent event, Emitter<TutoappState> emit) {
-    emit(TutoappHomeState());
     emit(TutoappReagendarState());
   }
 
@@ -206,7 +208,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       TutoappRoleEvent event, Emitter<TutoappState> emit) async {
     role = event.role;
     tuto.update_role(role);
-    emit(TutoappHomeState());
   }
 
   FutureOr<void> _seeAgenda(
@@ -224,7 +225,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   }
 
   FutureOr<void> _edit(TutoappEditTutoEvent event, Emitter<TutoappState> emit) {
-    emit(TutoappHomeState());
     emit(TutoappEditTutoState(documento: event.documento));
   }
 }

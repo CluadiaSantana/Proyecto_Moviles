@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/agenda.dart';
-import 'package:proyecto/pages/agendar_tutoria.dart';
-import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/alumno_tutorias/agenda.dart';
+import 'package:proyecto/pages/alumno_tutorias/agendar_tutoria.dart';
+import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 import 'package:proyecto/pages/tutorias_disponibles.dart';
@@ -26,8 +26,6 @@ class HomePage extends StatelessWidget {
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    BlocProvider.of<TutoappBloc>(context)
-                        .add(TutoappHomeEvent());
                   },
                   child: Text("Home",
                       style: TextStyle(
@@ -78,8 +76,7 @@ class HomePage extends StatelessWidget {
                     height: 170, width: 500, child: _showBottonList(state)));
               }
               if (state is TutoappAgendaChoiceState) {
-                print("AgendaChoice");
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pop();
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AgendarTutoria()));
               }
@@ -90,7 +87,7 @@ class HomePage extends StatelessWidget {
               }
               if (state is TutoappSeeAgendState) {
                 print("SeeAgend");
-                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.of(context).pop();
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => Agenda()));
               }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyecto/pages/edit_tuto.dart';
+import 'package:proyecto/pages/alumno_tutorias/edit_tuto.dart';
 
 class TutoriasList extends StatelessWidget {
   final Map<String, dynamic> tutoria;
@@ -20,6 +20,7 @@ class TutoriasList extends StatelessWidget {
     return BlocConsumer<TutoappBloc, TutoappState>(
       listener: (context, state) {
         if (state is TutoappEditTutoState) {
+          Navigator.of(context).pop();
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => EditTuto()));
         }
@@ -159,7 +160,6 @@ class TutoriasList extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
                   BlocProvider.of<TutoappBloc>(context).add(
                       TutoappCancelarEvent(documento: tutoria['documento']));
                 },

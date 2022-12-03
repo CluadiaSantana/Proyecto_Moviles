@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/homepage.dart';
-import 'package:proyecto/pages/tutorias_list.dart';
+import 'package:proyecto/pages/alumno_tutorias/tutorias_list.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 
 class Agenda extends StatelessWidget {
@@ -63,6 +63,7 @@ class Agenda extends StatelessWidget {
   BlocConsumer<TutoappBloc, TutoappState> _listTutorias() {
     return BlocConsumer<TutoappBloc, TutoappState>(listener: (context, state) {
       if (state is TutoappHomeState) {
+        Navigator.of(context).pop();
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => HomePage()));
       }
