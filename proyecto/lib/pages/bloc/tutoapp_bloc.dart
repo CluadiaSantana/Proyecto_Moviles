@@ -77,6 +77,8 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   String grade_choice = "na";
   String subject_choice = "na";
   String role = '';
+  List<Map<String, dynamic>> tutorias_agendadas = [];
+
   final tuto = Tutorias();
   TutoappBloc() : super(TutoappInitial()) {
     on<TutoappSelectGradeEvent>(_showList);
@@ -102,37 +104,42 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   }
 
   FutureOr<void> _navAgenda(
-      TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) {
-    grade_choice = number[event.grade - 1];
-    subject_choice = event.subject;
-    print(role);
-    if (role == 'Alumno') {
-      print("Alumno");
-      date_list.clear();
-      for (int i = 0; i <= 4; i++) {
-        date_list.add(
-            (Date.tomorrow + Duration(days: i + 1)).format('MMMM dd yyyy'));
-      }
-      emit(TutoappAgendaChoiceState(
-          grade: grade_choice,
-          subject: subject_choice,
-          date: date_choice,
-          hour: hour_choice,
-          data_list: date_list));
-    } else {
+      TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) async {
+    tutorias_agendadas = await tuto.getTuto(role.toLowerCase());
+    if (tutorias_agendadas.length < 5) {
       grade_choice = number[event.grade - 1];
       subject_choice = event.subject;
-      date_list.clear();
-      for (int i = 0; i <= 6; i++) {
-        date_list.add((Date.today + Duration(days: i)).format('MMMM dd yyyy'));
+      print(role);
+      if (role == 'Alumno') {
+        date_list.clear();
+        for (int i = 0; i <= 4; i++) {
+          date_list.add(
+              (Date.tomorrow + Duration(days: i + 1)).format('MMMM dd yyyy'));
+        }
+        emit(TutoappAgendaChoiceState(
+            grade: grade_choice,
+            subject: subject_choice,
+            date: date_choice,
+            hour: hour_choice,
+            data_list: date_list));
+      } else {
+        grade_choice = number[event.grade - 1];
+        subject_choice = event.subject;
+        date_list.clear();
+        for (int i = 0; i <= 6; i++) {
+          date_list
+              .add((Date.today + Duration(days: i)).format('MMMM dd yyyy'));
+        }
+        // emit(TutoappSelectTutoState(
+        //     grade: grade_choice,
+        //     subject: subject_choice,
+        //     date: date_choice,
+        //     hourStart: hour_start_choice,
+        //     hourEnd: hour_end_choice,
+        //     data_list: date_list));
       }
-      emit(TutoappSelectTutoState(
-          grade: grade_choice,
-          subject: subject_choice,
-          date: date_choice,
-          hourStart: hour_start_choice,
-          hourEnd: hour_end_choice,
-          data_list: date_list));
+    } else {
+      emit(TutoappExcededState());
     }
   }
 
@@ -143,6 +150,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     String name = 'Tutoria' + '-' + num.toString();
     final split = event.hour.split('-');
     if (event.date != 'Escoge la fecha' && event.hour != 'Escoge tu horario') {
+      emit(TutoappHomeState());
       tuto.addTutoria(name, event.date, grade_choice, split, subject_choice,
           event.description);
 
@@ -151,9 +159,13 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       List<dynamic> tutorias = await tuto.getTuto('alumno');
       if (tutorias.length > 0) {
         emit(TutoappSeeAgendState(tuto_list: tutorias));
+      } else {
+        List<dynamic> tuto_list = [];
+        emit(TutoappSeeAgendState(tuto_list: tuto_list));
       }
+
+      //estado de faltan datos
     }
-    //emit(TutoappSeeAgendState());
   }
 
   FutureOr<void> _cancelar(
@@ -167,6 +179,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _reagendar(
       TutoappReagendarEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappHomeState());
     emit(TutoappReagendarState());
   }
 
@@ -211,6 +224,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   }
 
   FutureOr<void> _edit(TutoappEditTutoEvent event, Emitter<TutoappState> emit) {
+    emit(TutoappHomeState());
     emit(TutoappEditTutoState(documento: event.documento));
   }
 }

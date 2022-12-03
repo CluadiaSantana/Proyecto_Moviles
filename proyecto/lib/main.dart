@@ -25,30 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: BlocConsumer<AuthBloc, AuthState>(
-        listener: ((context, state) {
-          if (state is AuthErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Error al autenticase"),
-              ),
-            );
-          }
-        }),
-        builder: (context, state) {
-          if (state is AuthSuccessState) {
-            return HomePage();
-          } else if (state is UnAuthState ||
-              state is AuthErrorState ||
-              state is SignOutSuccessState ||
-              state is AuthMidWayState) {
-            return Login();
-          } else if (state is AuthRoleState) {
-            return RolePage();
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
+      home: Login(),
     );
   }
 }

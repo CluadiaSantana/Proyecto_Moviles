@@ -18,13 +18,13 @@ class Login extends StatelessWidget {
             Scaffold.of(context)
                 .showBottomSheet((context) => _fingerprintOption(context));
           } else if (state is AuthFingerprintWaitingState) {
-          } else if (state is AuthSuccessState) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => HomePage()));
-            ;
           } else if (state is AuthRoleState) {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => RolePage()));
+          }
+          if (state is AuthSuccessState) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => HomePage()));
           }
         },
         builder: (context, state) {

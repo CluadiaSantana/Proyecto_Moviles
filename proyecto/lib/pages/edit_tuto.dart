@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/pages/homepage.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 import 'package:proyecto/pages/agenda.dart';
 import 'package:proyecto/pages/bloc/tutoapp_bloc.dart';
@@ -12,8 +13,6 @@ class EditTuto extends StatefulWidget {
 }
 
 class _EditTutoState extends State<EditTuto> {
-  var _help = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,9 +65,9 @@ class _EditTutoState extends State<EditTuto> {
       body: SingleChildScrollView(
         child: BlocConsumer<TutoappBloc, TutoappState>(
           listener: (context, state) {
-            if (state is TutoappSeeAgendState) {
+            if (state is TutoappHomeState) {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Agenda()));
+                  .push(MaterialPageRoute(builder: (context) => HomePage()));
             }
           },
           builder: (context, state) {
@@ -114,6 +113,7 @@ class _EditTutoState extends State<EditTuto> {
   }
 
   Container _description(String description) {
+    var _help = TextEditingController(text: description);
     return Container(
       child: Column(children: [
         Padding(

@@ -68,6 +68,8 @@ class TutoappMenuState extends TutoappState {}
 
 class TutoappHomeState extends TutoappState {}
 
+class TutoappExcededState extends TutoappState {}
+
 class TutoappEditTutoState extends TutoappState {
   final Map<String, dynamic> documento;
 

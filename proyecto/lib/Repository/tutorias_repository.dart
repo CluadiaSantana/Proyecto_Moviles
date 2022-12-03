@@ -125,4 +125,9 @@ class Tutorias {
         .doc(_auth.currentUser!.uid)
         .update({'tutor': _auth.currentUser!.uid, 'zoom': zoom});
   }
+
+  Future<int> number_tutorias(String user) async {
+    var num = await getTuto(user).then((snap) => snap.length);
+    return num;
+  }
 }

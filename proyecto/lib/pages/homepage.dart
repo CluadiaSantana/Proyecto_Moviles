@@ -65,17 +65,32 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.only(top: 40),
           child: BlocConsumer<TutoappBloc, TutoappState>(
             listener: (context, state) {
+              if (state is TutoappExcededState) {
+                print("Exceded");
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      'Ya tienes 5 tutorias agendadas primero elimina una'),
+                ));
+              }
               if (state is TutoappListState) {
+                print("List");
                 Scaffold.of(context).showBottomSheet((context) => SizedBox(
                     height: 170, width: 500, child: _showBottonList(state)));
-              } else if (state is TutoappAgendaChoiceState) {
+              }
+              if (state is TutoappAgendaChoiceState) {
+                print("AgendaChoice");
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => AgendarTutoria()));
-              } else if (state is TutoappSelectTutoState) {
+              }
+              if (state is TutoappSelectTutoState) {
+                print("SelectTuto");
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => TutoriasDisponibles()));
-              } else if (state is TutoappSeeAgendState) {
-                print("entro aqui");
+              }
+              if (state is TutoappSeeAgendState) {
+                print("SeeAgend");
+                Navigator.of(context).popUntil((route) => route.isFirst);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => Agenda()));
               }
