@@ -102,15 +102,6 @@ class TutoriasList extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text("Reagendar"),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue[400],
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                textStyle: const TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
-                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(

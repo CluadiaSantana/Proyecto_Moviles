@@ -119,6 +119,13 @@ class Tutorias {
         .update({'role': role});
   }
 
+  void update_edit(Map<String, dynamic> description) async {
+    await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .doc(description["documento"])
+        .update({'tutoria': description['tutoria']});
+  }
+
   void addTutor(String zoom) async {
     await FirebaseFirestore.instance
         .collection("Tutorias")

@@ -80,8 +80,9 @@ class TutoappEditTutoEvent extends TutoappEvent {
 
 class TutoappUpdateTutoEvent extends TutoappEvent {
   final Map<String, dynamic> documento;
+  final String help;
 
-  TutoappUpdateTutoEvent({required this.documento});
+  TutoappUpdateTutoEvent({required this.documento, required this.help});
 }
 
 class TutoappHomeEvent extends TutoappEvent {}

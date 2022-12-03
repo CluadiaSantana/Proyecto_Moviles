@@ -78,7 +78,6 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
         child: BlocConsumer<TutoappBloc, TutoappState>(
           listener: (context, state) {
             if (state is TutoappSeeAgendState) {
-              Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Agenda()));
             }
@@ -90,6 +89,12 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
             if (state is TutoappErrorAgendaState) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('Faltan datos para agendar la tutoria'),
+              ));
+            }
+            if (state is TutoappErrorHoraState) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content:
+                    Text('Ya se tiene una tutoria agendada en ese horario'),
               ));
             }
           },

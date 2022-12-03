@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/pages/alumno_tutorias/agenda.dart';
 import 'package:proyecto/pages/homepage.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
@@ -70,9 +71,19 @@ class _EditTutoState extends State<EditTuto> {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => HomePage()));
             }
+            if (state is TutoappSeeAgendState) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('Tutoria editada'),
+              ));
+              Navigator.of(context).pop();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Agenda()));
+            }
           },
           builder: (context, state) {
             if (state is TutoappEditTutoState) {
+              var _help = TextEditingController(
+                  text: state.documento['tutoria']['ayuda']);
               return Column(
                 children: [
                   Container(
@@ -93,9 +104,33 @@ class _EditTutoState extends State<EditTuto> {
                       ],
                     ),
                   ),
-                  _description(state.documento['tutoria']['ayuda']),
+                  Container(
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Text(
+                          "En Que Necesitas Ayuda?",
+                          style: TextStyle(
+                              fontFamily: 'Chewy-Regular',
+                              fontSize: 32,
+                              color: Colors.blue[600]),
+                        ),
+                      ),
+                      TextField(
+                        controller: _help,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ]),
+                  ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      BlocProvider.of<TutoappBloc>(context).add(
+                          TutoappUpdateTutoEvent(
+                              documento: state.documento,
+                              help: _help.value.text));
+                    },
                     child: Text("Editar Tutoria"),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
@@ -110,29 +145,6 @@ class _EditTutoState extends State<EditTuto> {
           },
         ),
       ),
-    );
-  }
-
-  Container _description(String description) {
-    var _help = TextEditingController(text: description);
-    return Container(
-      child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 15),
-          child: Text(
-            "En Que Necesitas Ayuda?",
-            style: TextStyle(
-                fontFamily: 'Chewy-Regular',
-                fontSize: 32,
-                color: Colors.blue[600]),
-          ),
-        ),
-        TextField(
-          controller: _help,
-          decoration: InputDecoration(
-              border: OutlineInputBorder(), hintText: description),
-        ),
-      ]),
     );
   }
 

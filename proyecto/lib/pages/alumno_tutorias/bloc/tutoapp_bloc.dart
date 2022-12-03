@@ -91,6 +91,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappGoAgendaEvent>(_seeAgenda);
     on<TutoappHomeEvent>(_goHome);
     on<TutoappEditTutoEvent>(_edit);
+    on<TutoappUpdateTutoEvent>(_update);
   }
 
   FutureOr<void> _showList(
@@ -138,8 +139,9 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     var num = await tuto.number_document();
     num = num + 1;
     String name = 'Tutoria' + '-' + num.toString();
-    final split = event.hour.split('-');
-    if (event.date != 'Escoge la fecha' && event.hour != 'Escoge tu horario') {
+    if ((event.date != 'Escoge la fecha') &&
+        (event.hour != 'Escoge tu horario')) {
+      final split = event.hour.split('-');
       for (dynamic tutoriad in tutorias_agendadas) {
         if (tutoriad["tutoria"]["horaInicio"] == split[0] &&
             event.date == tutoriad["tutoria"]["fecha"]) {
@@ -150,7 +152,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
               date: date_choice,
               hour: hour_choice,
               data_list: date_list));
-          print("agenda horario");
           return;
         }
       }
@@ -222,5 +223,15 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _edit(TutoappEditTutoEvent event, Emitter<TutoappState> emit) {
     emit(TutoappEditTutoState(documento: event.documento));
+  }
+
+  FutureOr<void> _update(
+      TutoappUpdateTutoEvent event, Emitter<TutoappState> emit) async {
+    print(event.help);
+    Map<String, dynamic> document = event.documento;
+    document['tutoria']['ayuda'] = event.help;
+    tuto.update_edit(document);
+    var tutorias = await tuto.getTuto(role.toLowerCase());
+    emit(TutoappSeeAgendState(tuto_list: tutorias));
   }
 }
