@@ -87,6 +87,14 @@ class Tutorias {
     return tutorias_list;
   }
 
+  List<String> list_search() {
+    List<String> dates = [];
+    for (int i = 0; i <= 6; i++) {
+      dates.add(((Date.today + Duration(days: i)).format('MMMM dd yyyy')));
+    }
+    return dates;
+  }
+
   void cancelar(String documento) async {
     await FirebaseFirestore.instance
         .collection("Tutorias")
