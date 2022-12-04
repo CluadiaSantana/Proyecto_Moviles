@@ -80,7 +80,7 @@ class Login extends StatelessWidget {
 
   SizedBox _fingerprintOption(BuildContext context) {
     return SizedBox(
-      height: 500,
+      height: 400,
       width: 500,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

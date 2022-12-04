@@ -87,6 +87,7 @@ class TutoappHomeEvent extends TutoappEvent {}
 
 class TutoappAcceptTutoEvent extends TutoappEvent {
   final Map<String, dynamic> documento;
+  final String zoom;
 
-  TutoappAcceptTutoEvent({required this.documento});
+  TutoappAcceptTutoEvent({required this.documento, required this.zoom});
 }

@@ -58,11 +58,13 @@ class Tutorias {
       String start, String end, String subject, String grade) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
-    String hora_actual = Date.today.format('HH');
-    hora_actual = hora_actual + '00';
 
-    print(grade);
+    print(date);
     print(datef);
+    print(start);
+    print(end);
+    print(subject);
+    print(grade);
     List<Map<String, dynamic>> tutorias_list = tutorias.docs
         .where((doc) =>
             doc.data()["tutor"] == "null" &&
@@ -81,6 +83,7 @@ class Tutorias {
         .map((doc) => doc.data().cast<String, dynamic>())
         .toList();
     tutorias_list = sort_list(tutorias_list);
+    print(tutorias_list);
     return tutorias_list;
   }
 
@@ -127,11 +130,18 @@ class Tutorias {
         .update({'tutoria': description['tutoria']});
   }
 
-  void addTutor(String zoom) async {
+  void addTutor(String document, String zoom) async {
     await FirebaseFirestore.instance
         .collection("Tutorias")
-        .doc(_auth.currentUser!.uid)
+        .doc(document)
         .update({'tutor': _auth.currentUser!.uid, 'zoom': zoom});
+  }
+
+  void delTutor(String document, String zoom) async {
+    await FirebaseFirestore.instance
+        .collection("Tutorias")
+        .doc(document)
+        .update({'tutor': "null", 'zoom': "null"});
   }
 
   Future<int> number_tutorias(String user) async {
