@@ -7,7 +7,6 @@ import 'package:dart_date/dart_date.dart';
 
 class Tutorias {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   Future<String> role() async {
     var doc = await FirebaseFirestore.instance
         .collection("usuarios")
@@ -55,31 +54,33 @@ class Tutorias {
     return tutorias_list;
   }
 
-  Future<List<Map<String, dynamic>>> getTutoSearch(
-      String date_start,
-      String date_end,
-      String start,
-      String end,
-      String subject,
-      String grade) async {
+  Future<List<Map<String, dynamic>>> getTutoSearch(String date, String datef,
+      String start, String end, String subject, String grade) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
-    var tutorias_list = tutorias.docs
+    String hora_actual = Date.today.format('HH');
+    hora_actual = hora_actual + '00';
+
+    print(grade);
+    print(datef);
+    List<Map<String, dynamic>> tutorias_list = tutorias.docs
         .where((doc) =>
-            DateFormat('MMMM dd yyyy').parse(date_start) <=
+            doc.data()["tutor"] == "null" &&
+            DateFormat('MMMM dd yyyy').parse(date) <=
                 DateFormat('MMMM dd yyyy')
-                    .parse(doc.data()['tutoria']['fecha']) &&
-            DateFormat('MMMM dd yyyy').parse(date_end) >=
+                    .parse(doc.data()['tutoria']["fecha"]) &&
+            DateFormat('MMMM dd yyyy').parse(datef) >=
                 DateFormat('MMMM dd yyyy')
-                    .parse(doc.data()['tutoria']['fecha']) &&
+                    .parse(doc.data()['tutoria']["fecha"]) &&
             int.parse(start) <=
-                int.parse(doc.data()['tutoria']['horaInicio']) &&
-            int.parse(end) >= int.parse(doc.data()['tutoria']['horaFin']) &&
-            doc.data()['tutoria']['materia'] == subject &&
-            doc.data()['tutoria']['grado'] == grade &&
+                int.parse(doc.data()['tutoria']["horaInicio"]) &&
+            int.parse(end) >= int.parse(doc.data()['tutoria']["horaFin"]) &&
+            subject == doc.data()['tutoria']["materia"] &&
+            grade == doc.data()['tutoria']["grado"] &&
             doc.data()['activate'])
         .map((doc) => doc.data().cast<String, dynamic>())
         .toList();
+    tutorias_list = sort_list(tutorias_list);
     return tutorias_list;
   }
 

@@ -36,8 +36,9 @@ class TutoappAgendaChoiceState extends TutoappState {
 
 class TutoappSeeAgendState extends TutoappState {
   final List<dynamic> tuto_list;
+  final String role;
 
-  TutoappSeeAgendState({required this.tuto_list});
+  TutoappSeeAgendState({required this.tuto_list, required this.role});
 }
 
 class TutoappReagendarState extends TutoappState {}
@@ -50,7 +51,7 @@ class TutoappSelectTutoState extends TutoappState {
   final String date;
   final String hourStart;
   final String hourEnd;
-  final List<String> data_list;
+  final List<Map<String, dynamic>> data_list;
 
   TutoappSelectTutoState(
       {required this.grade,
@@ -77,3 +78,5 @@ class TutoappEditTutoState extends TutoappState {
 class TutoappErrorAgendaState extends TutoappState {}
 
 class TutoappErrorHoraState extends TutoappState {}
+
+class TutoappLoginState extends TutoappState {}

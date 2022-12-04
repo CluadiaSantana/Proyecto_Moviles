@@ -7,8 +7,6 @@ abstract class TutoappEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TutoappReagendarEvent extends TutoappEvent {}
-
 class TutoappZoomEvent extends TutoappEvent {}
 
 class TutoappGoAgendaEvent extends TutoappEvent {}
@@ -86,3 +84,9 @@ class TutoappUpdateTutoEvent extends TutoappEvent {
 }
 
 class TutoappHomeEvent extends TutoappEvent {}
+
+class TutoappAcceptTutoEvent extends TutoappEvent {
+  final Map<String, dynamic> documento;
+
+  TutoappAcceptTutoEvent({required this.documento});
+}

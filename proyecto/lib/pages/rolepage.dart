@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/homepage.dart';
-import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
 
 class RolePage extends StatefulWidget {
   const RolePage({super.key});

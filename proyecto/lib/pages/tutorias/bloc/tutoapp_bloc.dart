@@ -72,8 +72,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   List<String> date_list = ["na"];
   String hour_choice = "Escoge tu horario";
   String date_choice = "Escoge la fecha";
-  String hour_start_choice = "0900";
-  String hour_end_choice = "2100";
   String grade_choice = "na";
   String subject_choice = "na";
   String role = '';
@@ -85,7 +83,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     on<TutoappSelectSubjectEvent>(_navAgenda);
     on<TutoappCompleteAgendEvent>(_addAgenda);
     on<TutoappCancelarEvent>(_cancelar);
-    on<TutoappReagendarEvent>(_reagendar);
     on<TutoappZoomEvent>(_goZoom);
     on<TutoappRoleEvent>(_rolechoice);
     on<TutoappGoAgendaEvent>(_seeAgenda);
@@ -97,6 +94,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   FutureOr<void> _showList(
       TutoappSelectGradeEvent event, Emitter<TutoappState> emit) async {
     role = await tuto.role();
+
     List<String> subject = grade[event.grade]!;
     emit(TutoappListState(subject: subject, grade: event.grade));
   }
@@ -104,11 +102,12 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
   FutureOr<void> _navAgenda(
       TutoappSelectSubjectEvent event, Emitter<TutoappState> emit) async {
     tutorias_agendadas = await tuto.getTuto(role.toLowerCase());
-    if (tutorias_agendadas.length < 5) {
-      grade_choice = number[event.grade - 1];
-      subject_choice = event.subject;
-      print(role);
-      if (role == 'Alumno') {
+    print(role);
+    if (role == 'Alumno') {
+      if (tutorias_agendadas.length < 5) {
+        grade_choice = number[event.grade - 1];
+        subject_choice = event.subject;
+
         date_list.clear();
         for (int i = 0; i <= 4; i++) {
           date_list.add(
@@ -121,16 +120,27 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
             hour: hour_choice,
             data_list: date_list));
       } else {
-        grade_choice = number[event.grade - 1];
-        subject_choice = event.subject;
-        date_list.clear();
-        for (int i = 0; i <= 6; i++) {
-          date_list
-              .add((Date.today + Duration(days: i)).format('MMMM dd yyyy'));
-        }
+        emit(TutoappExcededState());
       }
     } else {
-      emit(TutoappExcededState());
+      grade_choice = number[event.grade - 1];
+      subject_choice = event.subject;
+      date_list.clear();
+      for (int i = 0; i <= 6; i++) {
+        date_list
+            .add(((Date.today + Duration(days: i)).format('MMMM dd yyyy')));
+      }
+
+      List<Map<String, dynamic>> tutorias_disponibles =
+          await tuto.getTutoSearch(date_list[0], date_list[6], "0900", "2100",
+              subject_choice, grade_choice);
+      emit(TutoappSelectTutoState(
+          grade: grade_choice,
+          subject: subject_choice,
+          date: date_list[0],
+          hourStart: "0900",
+          hourEnd: "2100",
+          data_list: tutorias_disponibles));
     }
   }
 
@@ -162,10 +172,10 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
           event.description);
       List<dynamic> tutorias = await tuto.getTuto('alumno');
       if (tutorias.length > 0) {
-        emit(TutoappSeeAgendState(tuto_list: tutorias));
+        emit(TutoappSeeAgendState(tuto_list: tutorias, role: role));
       } else {
         List<dynamic> tuto_list = [];
-        emit(TutoappSeeAgendState(tuto_list: tuto_list));
+        emit(TutoappSeeAgendState(tuto_list: tuto_list, role: role));
       }
     } else {
       emit(TutoappErrorAgendaState());
@@ -184,12 +194,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     tuto.cancelar(event.documento);
     emit(TutoappCancelarState());
     var tutorias = await tuto.getTuto('alumno');
-    emit(TutoappSeeAgendState(tuto_list: tutorias));
-  }
-
-  FutureOr<void> _reagendar(
-      TutoappReagendarEvent event, Emitter<TutoappState> emit) {
-    emit(TutoappReagendarState());
+    emit(TutoappSeeAgendState(tuto_list: tutorias, role: role));
   }
 
   FutureOr<void> _goZoom(
@@ -209,12 +214,11 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _seeAgenda(
       TutoappGoAgendaEvent event, Emitter<TutoappState> emit) async {
-    if (role == '') {
-      role = await tuto.role();
-    }
+    role = await tuto.role();
+
     var tutorias = await tuto.getTuto(role.toLowerCase());
     print(tutorias);
-    emit(TutoappSeeAgendState(tuto_list: tutorias));
+    emit(TutoappSeeAgendState(tuto_list: tutorias, role: role));
   }
 
   FutureOr<void> _goHome(TutoappHomeEvent event, Emitter<TutoappState> emit) {
@@ -232,6 +236,6 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
     document['tutoria']['ayuda'] = event.help;
     tuto.update_edit(document);
     var tutorias = await tuto.getTuto(role.toLowerCase());
-    emit(TutoappSeeAgendState(tuto_list: tutorias));
+    emit(TutoappSeeAgendState(tuto_list: tutorias, role: role));
   }
 }

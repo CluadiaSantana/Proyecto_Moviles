@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:proyecto/pages/alumno_tutorias/edit_tuto.dart';
+import 'package:proyecto/pages/tutorias/edit_tuto.dart';
 
 class TutoriasList extends StatelessWidget {
   final Map<String, dynamic> tutoria;
+  final String role;
   final List<String> number = [
     "Primero",
     "Segundo",
@@ -13,7 +14,8 @@ class TutoriasList extends StatelessWidget {
     "Quinto",
     "Sexto"
   ];
-  TutoriasList({Key? key, required this.tutoria}) : super(key: key);
+  TutoriasList({Key? key, required this.tutoria, required this.role})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +44,16 @@ class TutoriasList extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                IconButton(
-                                    onPressed: () {
-                                      BlocProvider.of<TutoappBloc>(context).add(
-                                          TutoappEditTutoEvent(
-                                              documento: tutoria));
-                                    },
-                                    icon: Icon(Icons.edit)),
+                                Visibility(
+                                  child: IconButton(
+                                      onPressed: () {
+                                        BlocProvider.of<TutoappBloc>(context)
+                                            .add(TutoappEditTutoEvent(
+                                                documento: tutoria));
+                                      },
+                                      icon: Icon(Icons.edit)),
+                                  visible: (role == 'Alumno'),
+                                ),
                                 SizedBox(
                                   width: 120,
                                   child: Text(

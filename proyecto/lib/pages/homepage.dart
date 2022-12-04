@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/alumno_tutorias/agenda.dart';
-import 'package:proyecto/pages/alumno_tutorias/agendar_tutoria.dart';
-import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/tutorias/agenda.dart';
+import 'package:proyecto/pages/tutorias/agendar_tutoria.dart';
+import 'package:proyecto/pages/tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
-import 'package:proyecto/pages/tutorias_disponibles.dart';
+import 'package:proyecto/pages/login/login.dart';
+import 'package:proyecto/pages/tutorias/tutorias_disponibles.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -46,8 +47,11 @@ class HomePage extends StatelessWidget {
               TextButton(
                   onPressed: () async {
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                     BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Login()));
                   },
                   child: Text("Log Out",
                       style: TextStyle(

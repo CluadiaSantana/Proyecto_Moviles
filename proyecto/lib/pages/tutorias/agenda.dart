@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:proyecto/pages/homepage.dart';
-import 'package:proyecto/pages/alumno_tutorias/tutorias_list.dart';
+import 'package:proyecto/pages/tutorias/tutorias_list.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
+import 'package:proyecto/pages/login/login.dart';
 
 class Agenda extends StatelessWidget {
   const Agenda({super.key});
@@ -46,8 +47,11 @@ class Agenda extends StatelessWidget {
                 TextButton(
                     onPressed: () async {
                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                       BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Login()));
                     },
                     child: Text("Log Out",
                         style: TextStyle(
@@ -74,7 +78,8 @@ class Agenda extends StatelessWidget {
           return ListView.builder(
             itemCount: state.tuto_list.length,
             itemBuilder: (BuildContext context, int index) {
-              return TutoriasList(tutoria: state.tuto_list[index]);
+              return TutoriasList(
+                  tutoria: state.tuto_list[index], role: state.role);
             },
           );
         } else {

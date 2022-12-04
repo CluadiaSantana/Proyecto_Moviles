@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/pages/alumno_tutorias/agenda.dart';
+import 'package:proyecto/pages/tutorias/agenda.dart';
 import 'package:proyecto/pages/homepage.dart';
 import 'package:proyecto/pages/login/bloc/auth_bloc.dart';
-import 'package:proyecto/pages/alumno_tutorias/bloc/tutoapp_bloc.dart';
+import 'package:proyecto/pages/tutorias/bloc/tutoapp_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:proyecto/pages/login/login.dart';
 
 class EditTuto extends StatefulWidget {
   const EditTuto({super.key});
@@ -51,8 +52,12 @@ class _EditTutoState extends State<EditTuto> {
               TextButton(
                   onPressed: () async {
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                     BlocProvider.of<AuthBloc>(context).add(SignOutEvent());
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => Login()));
                   },
                   child: Text("Log Out",
                       style: TextStyle(
@@ -78,6 +83,11 @@ class _EditTutoState extends State<EditTuto> {
               Navigator.of(context).pop();
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => Agenda()));
+            }
+            if (state is SignOutSuccessState) {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Login()));
             }
           },
           builder: (context, state) {
