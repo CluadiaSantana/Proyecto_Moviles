@@ -155,7 +155,7 @@ class DisponiblesList extends StatelessWidget {
                           TutoappAcceptTutoEvent(
                               documento: tutoria['documento']));
                     },
-                    child: Text('ACCEPT',
+                    child: Text('ACEPTAR',
                         style:
                             TextStyle(color: Theme.of(context).primaryColor)),
                   ),
