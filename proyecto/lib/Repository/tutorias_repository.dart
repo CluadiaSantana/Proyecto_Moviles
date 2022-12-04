@@ -58,13 +58,6 @@ class Tutorias {
       String start, String end, String subject, String grade) async {
     var tutorias =
         await FirebaseFirestore.instance.collection("Tutorias").get();
-
-    print(date);
-    print(datef);
-    print(start);
-    print(end);
-    print(subject);
-    print(grade);
     List<Map<String, dynamic>> tutorias_list = tutorias.docs
         .where((doc) =>
             doc.data()["tutor"] == "null" &&

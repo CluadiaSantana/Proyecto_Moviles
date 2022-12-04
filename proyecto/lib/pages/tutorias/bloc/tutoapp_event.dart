@@ -91,3 +91,16 @@ class TutoappAcceptTutoEvent extends TutoappEvent {
 
   TutoappAcceptTutoEvent({required this.documento, required this.zoom});
 }
+
+class TutoappFiltrarEvent extends TutoappEvent {
+  final String hourI;
+  final String hourF;
+  final String dateI;
+  final String dateF;
+
+  TutoappFiltrarEvent(
+      {required this.hourI,
+      required this.hourF,
+      required this.dateI,
+      required this.dateF});
+}

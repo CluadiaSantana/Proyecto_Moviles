@@ -153,8 +153,7 @@ class DisponiblesList extends StatelessWidget {
                       Navigator.of(context).pop();
                       BlocProvider.of<TutoappBloc>(context).add(
                           TutoappAcceptTutoEvent(
-                              documento: tutoria['documento'],
-                              zoom: _zoom.value.text));
+                              documento: tutoria, zoom: _zoom.value.text));
                     },
                     child: Text('ACCEPT',
                         style:

@@ -2,7 +2,7 @@
     package="com.example.proyecto">
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
    <application
-        android:label="proyecto"
+        android:label="TutoApp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
