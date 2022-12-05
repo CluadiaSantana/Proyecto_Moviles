@@ -13,7 +13,6 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          // TODO: implement listener
           if (state is AuthMidWayState) {
             Scaffold.of(context)
                 .showBottomSheet((context) => _fingerprintOption(context));

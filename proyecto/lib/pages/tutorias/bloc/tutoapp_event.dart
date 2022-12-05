@@ -7,7 +7,11 @@ abstract class TutoappEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TutoappZoomEvent extends TutoappEvent {}
+class TutoappZoomEvent extends TutoappEvent {
+  final String zoom;
+
+  TutoappZoomEvent({required this.zoom});
+}
 
 class TutoappGoAgendaEvent extends TutoappEvent {}
 

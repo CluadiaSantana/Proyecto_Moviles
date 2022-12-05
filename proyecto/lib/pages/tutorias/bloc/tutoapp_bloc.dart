@@ -200,7 +200,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
 
   FutureOr<void> _goZoom(
       TutoappZoomEvent event, Emitter<TutoappState> emit) async {
-    Uri url = Uri.parse("https://zoom.us");
+    Uri url = Uri.parse(event.zoom);
     await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
@@ -211,6 +211,7 @@ class TutoappBloc extends Bloc<TutoappEvent, TutoappState> {
       TutoappRoleEvent event, Emitter<TutoappState> emit) async {
     role = event.role;
     tuto.update_role(role);
+    emit(TutoappHomeState());
   }
 
   FutureOr<void> _seeAgenda(

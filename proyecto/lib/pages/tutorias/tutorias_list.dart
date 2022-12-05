@@ -92,7 +92,11 @@ class TutoriasList extends StatelessWidget {
                       ),
                       Visibility(
                         child: IconButton(
-                          onPressed: (() {}),
+                          onPressed: (() {
+                            print("zoom");
+                            BlocProvider.of<TutoappBloc>(context)
+                                .add(TutoappZoomEvent(zoom: tutoria['zoom']));
+                          }),
                           icon: Image.asset('assets/images/zoom.png'),
                         ),
                         visible: (tutoria['zoom'] != 'null'),

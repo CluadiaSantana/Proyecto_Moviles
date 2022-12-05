@@ -23,46 +23,58 @@ class _RolePageState extends State<RolePage> {
       body: BlocConsumer<TutoappBloc, TutoappState>(
         listener: (context, state) {
           if (state is TutoappHomeState) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => HomePage()));
           }
         },
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 100),
-            child: Column(
-              children: [
-                Text(
-                  "Escoge si eres....",
-                  style: TextStyle(
-                      fontFamily: 'Chewy-Regular',
-                      fontSize: 40,
-                      color: Colors.amber[600]),
+          return BlocConsumer<TutoappBloc, TutoappState>(
+            listener: (context, state) {
+              if (state is TutoappHomeState) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => HomePage()));
+              }
+            },
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 100),
+                child: Column(
+                  children: [
+                    Text(
+                      "Escoge si eres....",
+                      style: TextStyle(
+                          fontFamily: 'Chewy-Regular',
+                          fontSize: 40,
+                          color: Colors.amber[600]),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 45),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: radioGroupGenerator(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    ElevatedButton(
+                      onPressed: (() {
+                        BlocProvider.of<TutoappBloc>(context)
+                            .add(TutoappRoleEvent(role: currentRadio!));
+                      }),
+                      child: Text("Aceptar"),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[600]),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 45),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: radioGroupGenerator(),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                ElevatedButton(
-                  onPressed: (() {
-                    BlocProvider.of<TutoappBloc>(context)
-                        .add(TutoappRoleEvent(role: currentRadio!));
-                  }),
-                  child: Text("Aceptar"),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[600]),
-                )
-              ],
-            ),
+              );
+            },
           );
         },
       ),
