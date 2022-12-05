@@ -54,7 +54,6 @@ class _TutoriasDisponiblesState extends State<TutoriasDisponibles> {
             .push(MaterialPageRoute(builder: (context) => HomePage()));
       }
       if (state is TutoappSeeAgendState) {
-        print("hola");
         Navigator.of(context).pop();
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Agenda()));
@@ -115,12 +114,13 @@ class _TutoriasDisponiblesState extends State<TutoriasDisponibles> {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'CANCEL',
+                      'CANCELAR',
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
                   TextButton(
                     onPressed: () {
+                      Navigator.of(context).pop();
                       Navigator.of(context).pop();
                       BlocProvider.of<TutoappBloc>(context).add(
                           TutoappFiltrarEvent(
@@ -129,7 +129,7 @@ class _TutoriasDisponiblesState extends State<TutoriasDisponibles> {
                               dateI: _dateI.toString(),
                               dateF: _dateF.toString()));
                     },
-                    child: Text('ACCEPT',
+                    child: Text('ACCEPTAR',
                         style:
                             TextStyle(color: Theme.of(context).primaryColor)),
                   ),

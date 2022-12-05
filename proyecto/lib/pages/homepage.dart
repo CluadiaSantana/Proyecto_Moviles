@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('TutAapp', style: TextStyle(fontFamily: 'Chewy-Regular')),
+        title: Text('TutoApp', style: TextStyle(fontFamily: 'Chewy-Regular')),
       ),
       drawer: Container(
         width: 200,

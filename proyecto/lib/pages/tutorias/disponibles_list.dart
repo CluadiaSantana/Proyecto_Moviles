@@ -144,7 +144,7 @@ class DisponiblesList extends StatelessWidget {
                       Navigator.of(context).pop();
                     },
                     child: Text(
-                      'CANCEL',
+                      'CANCELAR',
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ),
@@ -155,7 +155,7 @@ class DisponiblesList extends StatelessWidget {
                           TutoappAcceptTutoEvent(
                               documento: tutoria, zoom: _zoom.value.text));
                     },
-                    child: Text('ACCEPT',
+                    child: Text('ACCEPTAR',
                         style:
                             TextStyle(color: Theme.of(context).primaryColor)),
                   ),

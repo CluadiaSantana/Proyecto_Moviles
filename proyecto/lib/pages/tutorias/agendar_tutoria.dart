@@ -31,7 +31,8 @@ class _AgendarTutoriaState extends State<AgendarTutoria> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('TutAapp', style: TextStyle(fontFamily: 'Chewy-Regular')),
+        title: Text('TutoApp - Agendar Tutoria',
+            style: TextStyle(fontFamily: 'Chewy-Regular')),
       ),
       drawer: Container(
         width: 200,
